@@ -1,5 +1,14 @@
 package com.epam.jwd.core_final.domain;
 
+import com.epam.jwd.core_final.util.EntityIdGenerator;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
+
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  * Expected fields:
  * <p>
@@ -11,6 +20,29 @@ package com.epam.jwd.core_final.domain;
  * assignedCrew {@link java.util.List<CrewMember>} - list of missions members based on ship capacity - not defined by default
  * missionResult {@link MissionResult}
  */
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class FlightMission extends AbstractBaseEntity {
-    // todo
+    @NotNull
+    private String missionName;
+    @NotNull
+    private LocalDate startDate;
+    @NotNull
+    private LocalDate endDate;
+    @NotNull
+    private Long distance;
+
+    private Spaceship assignedSpaceship;
+    private List<? extends CrewMember> assignedCrew;
+    private MissionResult missionResult;
+
+
+    public FlightMission(@NotNull String name, @NotNull String missionName, @NotNull LocalDate startDate, @NotNull Long distance) {
+        super(EntityIdGenerator.getNextId(FlightMission.class), name);
+        this.missionName = missionName;
+        this.startDate = startDate;
+        this.distance = distance;
+    }
 }

@@ -21,16 +21,22 @@
 
     <category name="com.epam.jwd.core_final">
         <!--Options: all, trace, debug, info, warn, error, fatal-->
-        <priority value="info"/>
+        <priority value="fatal"/>
         <appender-ref ref="consoleAppender"/>
         <appender-ref ref="fileAppender"/>
     </category>
 
     <category name="com.epam.jwd.core_final.util" additivity="false">
         <!--Options: all, trace, debug, info, warn, error, fatal-->
-        <priority value="debug"/>
+        <priority value="fatal"/>
         <appender-ref ref="consoleAppender"/>
         <appender-ref ref="fileAppender"/>
+    </category>
+
+    <category name="com.epam.jwd.core_final.domain.RankTest" additivity="false">
+        <!--Options: all, trace, debug, info, warn, error, fatal-->
+        <priority value="fatal"/>
+        <appender-ref ref="consoleAppender"/>
     </category>
 
 </log4j:configuration>
