@@ -15,17 +15,16 @@ import org.jetbrains.annotations.NotNull;
  */
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @ToString(callSuper = true)
 public class CrewMember extends AbstractBaseEntity {
     @NotNull
     private Role role;
     @NotNull
     private Rank rank;
-    @EqualsAndHashCode.Exclude
     private Boolean isReadyForNextMissions = true;
 
-    public CrewMember(@NotNull String name,@NotNull Role role,@NotNull Rank rank) {
+    protected CrewMember(@NotNull String name, @NotNull Role role, @NotNull Rank rank) {
         super(EntityIdGenerator.getNextId(CrewMember.class), name);
         this.role = role;
         this.rank = rank;

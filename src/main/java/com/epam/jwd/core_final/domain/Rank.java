@@ -20,7 +20,7 @@ public enum Rank implements BaseEntity {
     }
 
     /**
-     * todo via java.lang.enum methods!
+     * to do via java.lang.enum methods!
      */
     @Override
     public String getName() {
@@ -28,7 +28,7 @@ public enum Rank implements BaseEntity {
     }
 
     /**
-     * todo via java.lang.enum methods!
+     * to do via java.lang.enum methods!
      *
      * @throws UnknownEntityException if such id does not exist
      */
@@ -36,7 +36,7 @@ public enum Rank implements BaseEntity {
         try {
             return Rank.values()[id - 1];
         } catch (Exception e) {
-            throw new UnknownEntityException(Rank.class.getSimpleName());
+            throw new UnknownEntityException(Rank.class.getSimpleName(), id);
         }
     }
 }

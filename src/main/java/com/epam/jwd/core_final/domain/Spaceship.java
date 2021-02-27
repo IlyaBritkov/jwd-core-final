@@ -15,21 +15,18 @@ import java.util.Map;
  */
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @ToString(callSuper = true)
 public class Spaceship extends AbstractBaseEntity {
     @NotNull
     private Map<Role, Short> crew;
     @NotNull
     private Long flightDistance;
-    // todo: when is defined?
-    @EqualsAndHashCode.Exclude
-    private Boolean isReadyForNextMissions;
+    private Boolean isReadyForNextMissions = true;
 
-    public Spaceship(@NotNull String name, @NotNull Map<Role, Short> crew, @NotNull Long flightDistance) {
+    protected Spaceship(@NotNull String name, @NotNull Map<Role, Short> crew, @NotNull Long flightDistance) {
         super(EntityIdGenerator.getNextId(Spaceship.class), name);
         this.crew = crew;
         this.flightDistance = flightDistance;
-        this.isReadyForNextMissions = true;
     }
 }

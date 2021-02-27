@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @ToString(callSuper = true)
 public class FlightMission extends AbstractBaseEntity {
     @NotNull
@@ -39,7 +39,7 @@ public class FlightMission extends AbstractBaseEntity {
     private MissionResult missionResult;
 
 
-    public FlightMission(@NotNull String name, @NotNull String missionName, @NotNull LocalDate startDate, @NotNull Long distance) {
+    protected FlightMission(@NotNull String name, @NotNull String missionName, @NotNull LocalDate startDate, @NotNull Long distance) {
         super(EntityIdGenerator.getNextId(FlightMission.class), name);
         this.missionName = missionName;
         this.startDate = startDate;

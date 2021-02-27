@@ -10,9 +10,10 @@ import org.jetbrains.annotations.NotNull;
  * id {@link Long} - entity id
  * name {@link String} - entity name
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public abstract class AbstractBaseEntity implements BaseEntity {
+    @EqualsAndHashCode.Include
     private Long id;
     private String name;
 
