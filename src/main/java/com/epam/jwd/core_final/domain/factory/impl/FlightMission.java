@@ -20,7 +20,11 @@ import java.util.List;
  * assignedSpaceShift {@link Spaceship} - not defined by default
  * assignedCrew {@link java.util.List<CrewMember>} - list of missions members based on ship capacity - not defined by default
  * missionResult {@link MissionResult}
+ * * from {@link Planet}
+ *  * to {@link Planet}
  */
+
+// todo:fix it
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
