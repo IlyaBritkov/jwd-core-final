@@ -1,6 +1,6 @@
 package com.epam.jwd.core_final.criteria;
 
-import com.epam.jwd.core_final.domain.BaseEntity;
+import com.epam.jwd.core_final.domain.factory.impl.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

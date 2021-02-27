@@ -1,9 +1,9 @@
 package com.epam.jwd.core_final.criteria;
 
-import com.epam.jwd.core_final.domain.CrewMember;
-import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.MissionResult;
-import com.epam.jwd.core_final.domain.Spaceship;
+import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
+import com.epam.jwd.core_final.domain.factory.impl.FlightMission;
+import com.epam.jwd.core_final.domain.factory.impl.Spaceship;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Should be a builder for {@link com.epam.jwd.core_final.domain.FlightMission} fields
+ * Should be a builder for {@link FlightMission} fields
  */
 
 @Getter

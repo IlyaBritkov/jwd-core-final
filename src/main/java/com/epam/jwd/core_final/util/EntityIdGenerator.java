@@ -1,9 +1,9 @@
 package com.epam.jwd.core_final.util;
 
-import com.epam.jwd.core_final.domain.BaseEntity;
-import com.epam.jwd.core_final.domain.CrewMember;
-import com.epam.jwd.core_final.domain.FlightMission;
-import com.epam.jwd.core_final.domain.Spaceship;
+import com.epam.jwd.core_final.domain.factory.impl.BaseEntity;
+import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
+import com.epam.jwd.core_final.domain.factory.impl.FlightMission;
+import com.epam.jwd.core_final.domain.factory.impl.Spaceship;
 import com.epam.jwd.core_final.exception.UnknownEntityException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 /**
- * Class for generation of an id for every entity that implements {@link com.epam.jwd.core_final.domain.BaseEntity} interface.
+ * Class for generation of an id for every entity that implements {@link BaseEntity} interface.
  **/
 public class EntityIdGenerator {
     private static final Logger logger = LoggerFactory.getLogger(EntityIdGenerator.class);

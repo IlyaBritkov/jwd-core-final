@@ -1,4 +1,4 @@
-package com.epam.jwd.core_final.domain;
+package com.epam.jwd.core_final.domain.factory.impl;
 
 public interface BaseEntity {
 

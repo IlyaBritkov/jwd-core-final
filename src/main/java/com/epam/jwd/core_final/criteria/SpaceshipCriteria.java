@@ -1,7 +1,7 @@
 package com.epam.jwd.core_final.criteria;
 
 import com.epam.jwd.core_final.domain.Role;
-import com.epam.jwd.core_final.domain.Spaceship;
+import com.epam.jwd.core_final.domain.factory.impl.Spaceship;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

@@ -1,9 +1,9 @@
 package com.epam.jwd.core_final.context.impl;
 
 import com.epam.jwd.core_final.context.ApplicationContext;
-import com.epam.jwd.core_final.domain.BaseEntity;
-import com.epam.jwd.core_final.domain.CrewMember;
-import com.epam.jwd.core_final.domain.Spaceship;
+import com.epam.jwd.core_final.domain.factory.impl.BaseEntity;
+import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
+import com.epam.jwd.core_final.domain.factory.impl.Spaceship;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 
 import java.util.ArrayList;

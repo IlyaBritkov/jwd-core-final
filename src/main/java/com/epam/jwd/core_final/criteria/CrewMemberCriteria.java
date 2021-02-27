@@ -1,8 +1,8 @@
 package com.epam.jwd.core_final.criteria;
 
-import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.Rank;
 import com.epam.jwd.core_final.domain.Role;
+import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * Should be a builder for {@link com.epam.jwd.core_final.domain.CrewMember} fields
+ * Should be a builder for {@link CrewMember} fields
  */
 
 @Getter

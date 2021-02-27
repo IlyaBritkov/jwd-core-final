@@ -1,5 +1,6 @@
-package com.epam.jwd.core_final.domain;
+package com.epam.jwd.core_final.domain.factory.impl;
 
+import com.epam.jwd.core_final.domain.Role;
 import com.epam.jwd.core_final.util.EntityIdGenerator;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 
 /**
- * crew {@link java.util.Map<Role,Short>}
+ * crew {@link java.util.Map< Role ,Short>}
  * flightDistance {@link Long} - total available flight distance
  * isReadyForNextMissions {@link Boolean} - true by default. Set to false, after first failed mission
  */
