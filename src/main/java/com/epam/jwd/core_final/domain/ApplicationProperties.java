@@ -16,6 +16,7 @@ import java.util.Properties;
  * crewFileName {@link String}
  * missionsFileName {@link String}
  * spaceshipsFileName {@link String}
+ * planetsFileName {@link String}
  * <p>
  * fileRefreshRate {@link Integer}
  * dateTimeFormat {@link String} - date/time format for {@link java.time.format.DateTimeFormatter} pattern
@@ -28,6 +29,7 @@ public final class ApplicationProperties {
     private final String crewFileName;
     private final String missionsFileName;
     private final String spaceshipsFileName;
+    private final String planetsFileName;
 
     private final Integer fileRefreshRate;
     private final String dateTimeFormat;
@@ -38,6 +40,8 @@ public final class ApplicationProperties {
         this.crewFileName = Objects.requireNonNull(properties.getProperty("crewFileName"));
         this.missionsFileName = Objects.requireNonNull(properties.getProperty("missionsFileName"));
         this.spaceshipsFileName = Objects.requireNonNull(properties.getProperty("spaceshipsFileName"));
+        this.planetsFileName = Objects.requireNonNull(properties.getProperty("planetsFileName"));
+
 
         this.fileRefreshRate = Integer.valueOf(Objects.requireNonNull(properties.getProperty("fileRefreshRate")));
         this.dateTimeFormat = Objects.requireNonNull(properties.getProperty("dateTimeFormat"));

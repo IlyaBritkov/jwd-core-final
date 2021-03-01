@@ -20,11 +20,9 @@ import java.util.List;
  * assignedSpaceShift {@link Spaceship} - not defined by default
  * assignedCrew {@link java.util.List<CrewMember>} - list of missions members based on ship capacity - not defined by default
  * missionResult {@link MissionResult}
- * * from {@link Planet}
- *  * to {@link Planet}
+ * from {@link Planet}
+ * to {@link Planet}
  */
-
-// todo:fix it
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
@@ -33,21 +31,30 @@ public class FlightMission extends AbstractBaseEntity {
     @NotNull
     private String missionName;
     @NotNull
+    @EqualsAndHashCode.Include
     private LocalDate startDate;
     @NotNull
+    @EqualsAndHashCode.Include
     private LocalDate endDate;
     @NotNull
     private Long distance;
+    @NotNull
+    private Planet from;
+    @NotNull
+    private Planet to;
 
     private Spaceship assignedSpaceship;
     private List<? extends CrewMember> assignedCrew;
     private MissionResult missionResult;
 
 
-    protected FlightMission(@NotNull String name, @NotNull String missionName, @NotNull LocalDate startDate, @NotNull Long distance) {
+    protected FlightMission(@NotNull String name, @NotNull String missionName, @NotNull LocalDate startDate,
+                            @NotNull Long distance, @NotNull Planet from, @NotNull Planet to) {
         super(EntityIdGenerator.getNextId(FlightMission.class), name);
         this.missionName = missionName;
         this.startDate = startDate;
         this.distance = distance;
+        this.from = from;
+        this.to = to;
     }
 }

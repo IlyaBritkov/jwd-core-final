@@ -9,6 +9,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class EntityIdGeneratorTest {
+    {
+        EntityIdGenerator.resetAll();
+    }
 
     @Test
     public void getNextIdMethodShouldGenerateAppropriateSequentialIdForCrewMemberEntity() {

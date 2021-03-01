@@ -16,13 +16,13 @@ public class CrewMemberFactory implements EntityFactory<CrewMember> {
     private CrewMemberFactory() {
     }
 
-    public CrewMember create(@NotNull String name, @NotNull Role role, @NotNull Rank rank) {
-        return create(new Object[]{name, role, rank});
+    public CrewMember create(@NotNull Role role, @NotNull String name, @NotNull Rank rank) {
+        return create(new Object[]{role, name, rank});
     }
 
     @Override
     public CrewMember create(@NotNull Object... args) {
-        return new CrewMember((String) args[0], (Role) args[1], (Rank) args[2]);
+        return new CrewMember((Role) args[0], (String) args[1], (Rank) args[2]);
     }
 
     public static CrewMemberFactory getInstance() {

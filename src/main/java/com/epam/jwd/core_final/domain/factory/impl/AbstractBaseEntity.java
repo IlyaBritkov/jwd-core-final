@@ -13,8 +13,8 @@ import org.jetbrains.annotations.NotNull;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public abstract class AbstractBaseEntity implements BaseEntity {
-    @EqualsAndHashCode.Include
     private Long id;
+    @EqualsAndHashCode.Include
     private String name;
 
     protected AbstractBaseEntity() {

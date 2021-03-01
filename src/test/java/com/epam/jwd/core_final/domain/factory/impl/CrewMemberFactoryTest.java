@@ -15,8 +15,8 @@ public class CrewMemberFactoryTest {
     @Test
     public void methodCreateShouldReturnNewEntities() {
         CrewMemberFactory factory = CrewMemberFactory.getInstance();
-        CrewMember first = factory.create("Ilya", Role.FLIGHT_ENGINEER, Rank.FIRST_OFFICER);
-        CrewMember second = factory.create("Dimon", Role.COMMANDER, Rank.CAPTAIN);
+        CrewMember first = factory.create(Role.FLIGHT_ENGINEER, "Ilya", Rank.FIRST_OFFICER);
+        CrewMember second = factory.create(Role.COMMANDER, "Dimon", Rank.CAPTAIN);
         Assertions.assertNotSame(first, second);
         Assertions.assertNotEquals(first, second);
     }
@@ -27,7 +27,7 @@ public class CrewMemberFactoryTest {
         Role role = Role.FLIGHT_ENGINEER;
         Rank rank = Rank.FIRST_OFFICER;
         CrewMemberFactory factory = CrewMemberFactory.getInstance();
-        CrewMember crewMember = factory.create("Ilya", Role.FLIGHT_ENGINEER, Rank.FIRST_OFFICER);
+        CrewMember crewMember = factory.create(Role.FLIGHT_ENGINEER, "Ilya", Rank.FIRST_OFFICER);
         Assertions.assertEquals(name, crewMember.getName());
         Assertions.assertEquals(role, crewMember.getRole());
         Assertions.assertEquals(rank, crewMember.getRank());

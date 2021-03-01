@@ -13,14 +13,14 @@ import java.util.Map;
 public class SpaceshipFactory implements EntityFactory<Spaceship> {
     private static SpaceshipFactory INSTANCE;
 
-    public Spaceship create(@NotNull String name, @NotNull Map<Role, Short> crew, @NotNull Long flightDistance) {
-        return create(new Object[]{name, crew, flightDistance});
+    public Spaceship create(@NotNull String name, @NotNull Long flightDistance, @NotNull Map<Role, Short> crew) {
+        return create(new Object[]{name, flightDistance, crew});
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public Spaceship create(Object... args) {
-        return new Spaceship((String) args[0], (Map<Role, Short>) args[1], (Long) args[2]);
+        return new Spaceship((String) args[0], (Long) args[1], (Map<Role, Short>) args[2]);
     }
 
     public static SpaceshipFactory getInstance() {

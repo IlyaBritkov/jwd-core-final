@@ -20,12 +20,14 @@ import java.util.Map;
 @ToString(callSuper = true)
 public class Spaceship extends AbstractBaseEntity {
     @NotNull
+    @EqualsAndHashCode.Include
     private Map<Role, Short> crew;
     @NotNull
+    @EqualsAndHashCode.Include
     private Long flightDistance;
     private Boolean isReadyForNextMissions = true;
 
-    protected Spaceship(@NotNull String name, @NotNull Map<Role, Short> crew, @NotNull Long flightDistance) {
+    protected Spaceship(@NotNull String name, @NotNull Long flightDistance, @NotNull Map<Role, Short> crew) {
         super(EntityIdGenerator.getNextId(Spaceship.class), name);
         this.crew = crew;
         this.flightDistance = flightDistance;

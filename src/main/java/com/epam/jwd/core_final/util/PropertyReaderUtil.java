@@ -14,7 +14,8 @@ public final class PropertyReaderUtil {
     @Getter
     private static final Properties properties = new Properties();
 
-    private PropertyReaderUtil() {
+    static {
+        loadProperties();
     }
 
     /**

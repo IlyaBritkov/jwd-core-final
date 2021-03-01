@@ -46,6 +46,10 @@ dependencies {
     testImplementation("org.junit.platform:junit-platform-runner:1.5.2")
     testImplementation("junit:junit:4.12")
     testImplementation("org.junit.vintage:junit-vintage-engine:4.12.0-M4")
+
+    // https://mvnrepository.com/artifact/com.codepoetics/protonpack
+    implementation group: 'com.codepoetics', name: 'protonpack', version: '1.16'
+
 }
 
 test {

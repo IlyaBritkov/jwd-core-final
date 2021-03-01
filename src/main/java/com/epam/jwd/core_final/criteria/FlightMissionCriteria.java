@@ -3,6 +3,7 @@ package com.epam.jwd.core_final.criteria;
 import com.epam.jwd.core_final.domain.MissionResult;
 import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
 import com.epam.jwd.core_final.domain.factory.impl.FlightMission;
+import com.epam.jwd.core_final.domain.factory.impl.Planet;
 import com.epam.jwd.core_final.domain.factory.impl.Spaceship;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +36,10 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
     private List<? extends CrewMember> assignedCrew;
     @Nullable
     private MissionResult missionResult;
+    @Nullable
+    private Planet from;
+    @Nullable
+    private Planet to;
 
     protected FlightMissionCriteria() {
     }
@@ -59,6 +64,10 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
         private List<? extends CrewMember> assignedCrew;
         @Nullable
         private MissionResult missionResult;
+        @Nullable
+        private Planet from;
+        @Nullable
+        private Planet to;
 
         public FlightMissionCriteriaBuilder(Class<FlightMissionCriteria> criteriaClass) {
             super(criteriaClass);
@@ -96,6 +105,16 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
 
         public FlightMissionCriteriaBuilder setMissionResult(@Nullable MissionResult missionResult) {
             this.missionResult = missionResult;
+            return this;
+        }
+
+        public FlightMissionCriteriaBuilder setFrom(Planet from) {
+            this.from = from;
+            return this;
+        }
+
+        public FlightMissionCriteriaBuilder setTo(Planet to) {
+            this.to = to;
             return this;
         }
 
