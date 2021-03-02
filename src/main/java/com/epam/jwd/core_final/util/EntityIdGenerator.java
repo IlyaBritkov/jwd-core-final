@@ -14,10 +14,10 @@ import java.util.Optional;
 public class EntityIdGenerator {
     private static final Logger logger = LoggerFactory.getLogger(EntityIdGenerator.class);
 
-    private static Long crewMemberId = 0L;
-    private static Long flightMissionId = 0L;
-    private static Long spaceshipId = 0L;
-    private static Long planetId = 0L;
+    private static Long crewMemberId = 1L;
+    private static Long flightMissionId = 1L;
+    private static Long spaceshipId = 1L;
+    private static Long planetId = 1L;
 
     private EntityIdGenerator() {
     }
@@ -62,13 +62,13 @@ public class EntityIdGenerator {
      **/
     public static <T extends BaseEntity> void reset(Class<T> tClass) {
         if (tClass == CrewMember.class) {
-            crewMemberId = 0L;
+            crewMemberId = 1L;
         } else if (tClass == Spaceship.class) {
-            spaceshipId = 0L;
+            spaceshipId = 1L;
         } else if (tClass == FlightMission.class) {
-            flightMissionId = 0L;
+            flightMissionId = 1L;
         } else if (tClass == Planet.class) {
-            planetId = 0L;
+            planetId = 1L;
         } else {
             throw new UnknownEntityException(tClass.getSimpleName());
         }

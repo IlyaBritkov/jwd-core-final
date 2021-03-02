@@ -8,6 +8,9 @@ import com.epam.jwd.core_final.domain.factory.impl.Planet;
 import com.epam.jwd.core_final.domain.factory.impl.Spaceship;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.exception.UnknownEntityException;
+import com.epam.jwd.core_final.repository.CrewRepository;
+import com.epam.jwd.core_final.repository.PlanetRepository;
+import com.epam.jwd.core_final.repository.SpaceshipsRepository;
 import com.epam.jwd.core_final.repository.impl.CrewRepositoryImpl;
 import com.epam.jwd.core_final.repository.impl.PlanetRepositoryImpl;
 import com.epam.jwd.core_final.repository.impl.SpaceshipsRepositoryImpl;
@@ -16,8 +19,8 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 public class NassaContext implements ApplicationContext {
     private final Logger logger = LoggerFactory.getLogger(NassaContext.class);
@@ -25,25 +28,25 @@ public class NassaContext implements ApplicationContext {
     private static final ApplicationProperties applicationProperties = new ApplicationProperties(PropertyReaderUtil.getProperties());
 
     // no getters/setters for them
-    private Collection<CrewMember> crewMembers = new HashSet<>();
-    private final CrewRepositoryImpl crewRepository = CrewRepositoryImpl.getInstance();
+    private Set<CrewMember> crewMembers = new HashSet<>();
+    private final CrewRepository crewRepository = CrewRepositoryImpl.getInstance();
 
-    private Collection<Spaceship> spaceships = new HashSet<>();
-    private final SpaceshipsRepositoryImpl spaceshipsRepository = SpaceshipsRepositoryImpl.getInstance();
+    private Set<Spaceship> spaceships = new HashSet<>();
+    private final SpaceshipsRepository spaceshipsRepository = SpaceshipsRepositoryImpl.getInstance();
 
-    private Collection<Planet> planetMap = new HashSet<>();
-    private final PlanetRepositoryImpl planetRepository = PlanetRepositoryImpl.getInstance();
+    private Set<Planet> planetMap = new HashSet<>();
+    private final PlanetRepository planetRepository = PlanetRepositoryImpl.getInstance();
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends BaseEntity> Collection<T> retrieveBaseEntityList(Class<T> tClass) {
-        Collection<T> collection = null;
+    public <T extends BaseEntity> Set<T> retrieveBaseEntityList(Class<T> tClass) {
+        Set<T> collection = null;
         if (tClass == CrewMember.class) {
-            collection = (Collection<T>) crewMembers;
+            collection = (Set<T>) crewMembers;
         } else if (tClass == Spaceship.class) {
-            collection = (Collection<T>) spaceships;
+            collection = (Set<T>) spaceships;
         } else if (tClass == Planet.class) {
-            collection = (Collection<T>) planetMap;
+            collection = (Set<T>) planetMap;
         }
         logger.debug("Collection with {} entities was retrieved", tClass.getSimpleName());
         return collection;
@@ -58,9 +61,9 @@ public class NassaContext implements ApplicationContext {
     @Override
     public void init() throws InvalidStateException {
         try {
-            crewMembers = crewRepository.findAll();
-            spaceships = spaceshipsRepository.findAll();
-            planetMap = planetRepository.findAll();
+            crewMembers = (Set<CrewMember>) crewRepository.findAll();
+            spaceships = (Set<Spaceship>) spaceshipsRepository.findAll();
+            planetMap = (Set<Planet>) planetRepository.findAll();
             logger.info("All cashes were initialized");
         } catch (Exception e) {
 
@@ -68,6 +71,7 @@ public class NassaContext implements ApplicationContext {
         }
     }
 
+    @Override
     public void emptyAllCash() {
         emptyCash(CrewMember.class);
         emptyCash(Spaceship.class);
@@ -75,6 +79,7 @@ public class NassaContext implements ApplicationContext {
         logger.info("All cashes were deleted");
     }
 
+    @Override
     public <T extends BaseEntity> void emptyCash(Class<T> tClass) {
         if (tClass == CrewMember.class) {
             crewMembers = new HashSet<>();

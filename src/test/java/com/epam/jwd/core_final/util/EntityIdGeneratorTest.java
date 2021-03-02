@@ -16,37 +16,37 @@ public class EntityIdGeneratorTest {
     @Test
     public void getNextIdMethodShouldGenerateAppropriateSequentialIdForCrewMemberEntity() {
         Long crewMemberId = EntityIdGenerator.getNextId(CrewMember.class);
-        Assert.assertEquals((Long) 0L, crewMemberId);
-
-        crewMemberId = EntityIdGenerator.getNextId(CrewMember.class);
         Assert.assertEquals((Long) 1L, crewMemberId);
 
         crewMemberId = EntityIdGenerator.getNextId(CrewMember.class);
         Assert.assertEquals((Long) 2L, crewMemberId);
+
+        crewMemberId = EntityIdGenerator.getNextId(CrewMember.class);
+        Assert.assertEquals((Long) 3L, crewMemberId);
     }
 
     @Test
     public void getNextIdMethodShouldGenerateAppropriateSequentialIdForFlightMissionEntity() {
         Long flightMissionId = EntityIdGenerator.getNextId(FlightMission.class);
-        Assert.assertEquals((Long) 0L, flightMissionId);
-
-        flightMissionId = EntityIdGenerator.getNextId(FlightMission.class);
         Assert.assertEquals((Long) 1L, flightMissionId);
 
         flightMissionId = EntityIdGenerator.getNextId(FlightMission.class);
         Assert.assertEquals((Long) 2L, flightMissionId);
+
+        flightMissionId = EntityIdGenerator.getNextId(FlightMission.class);
+        Assert.assertEquals((Long) 3L, flightMissionId);
     }
 
     @Test
     public void getNextIdMethodShouldGenerateAppropriateSequentialIdForSpaceshipEntity() {
         Long spaceshipId = EntityIdGenerator.getNextId(Spaceship.class);
-        Assert.assertEquals((Long) 0L, spaceshipId);
-
-        spaceshipId = EntityIdGenerator.getNextId(Spaceship.class);
         Assert.assertEquals((Long) 1L, spaceshipId);
 
         spaceshipId = EntityIdGenerator.getNextId(Spaceship.class);
         Assert.assertEquals((Long) 2L, spaceshipId);
+
+        spaceshipId = EntityIdGenerator.getNextId(Spaceship.class);
+        Assert.assertEquals((Long) 3L, spaceshipId);
     }
 
     @Test(expected = UnknownEntityException.class)

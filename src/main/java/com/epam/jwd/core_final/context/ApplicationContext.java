@@ -7,8 +7,12 @@ import java.util.Collection;
 
 public interface ApplicationContext {
 
-    <T extends BaseEntity>Collection<T> retrieveBaseEntityList(Class<T> tClass);
+    <T extends BaseEntity> Collection<T> retrieveBaseEntityList(Class<T> tClass);
 
     void init() throws InvalidStateException;
+
+    void emptyAllCash();
+
+    <T extends BaseEntity> void emptyCash(Class<T> tClass);
 
 }

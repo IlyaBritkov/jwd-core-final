@@ -1,8 +1,18 @@
 package com.epam.jwd.core_final;
 
-public class Main {
+import com.epam.jwd.core_final.context.Application;
+import com.epam.jwd.core_final.context.ApplicationContext;
+import com.epam.jwd.core_final.context.ApplicationMenu;
+import com.epam.jwd.core_final.exception.InvalidStateException;
 
-    public static void main(String[] args) {
-//        Application.start();
+public class Main {
+    private static ApplicationMenu menu;
+
+    public static void main(String[] args) throws InvalidStateException {
+        menu = Application.start();
+    }
+
+    public static ApplicationContext getApplicationContext() {
+        return menu.getApplicationContext();
     }
 }

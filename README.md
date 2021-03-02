@@ -23,8 +23,8 @@
 * Extend missed criteria implementations
 * Update custom exception with meaningful messages (feel free to create your own exceptions, if you need them)
 * Populate context with missing implementation
-* Design UI for ApplicationMenu (user should be able to get/update information about CrewMembers, Spaceships. 
-Able to create/update mission information). 
+* Design UI for ApplicationMenu (user should be able to get/delete information about CrewMembers, Spaceships. 
+Able to create/delete mission information). 
 Able to write information about selected mission(s) in output file in json format
 
 

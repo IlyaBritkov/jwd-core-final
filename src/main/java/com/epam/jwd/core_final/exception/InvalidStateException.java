@@ -2,7 +2,6 @@ package com.epam.jwd.core_final.exception;
 
 import java.util.Arrays;
 
-// todo: maybe change something
 public class InvalidStateException extends Exception {
     private final Object[] args;
 

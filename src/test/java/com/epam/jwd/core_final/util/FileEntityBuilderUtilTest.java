@@ -15,7 +15,7 @@ public class FileEntityBuilderUtilTest {
     public void methodGetCollectionFromFileShouldRetrieveAllCrewMemberEntities() throws IOException {
         int expectedEntityAmount = 100;
         FileEntityBuilderUtil<CrewMember> entityBuilder = new FileEntityBuilderUtil<>(CrewMember.class);
-        Collection<CrewMember> collection = entityBuilder.getSetFromFile("input/crew");
+        Collection<CrewMember> collection = entityBuilder.getCollectionFromFile("input/crew");
         Assertions.assertEquals(expectedEntityAmount, collection.size());
     }
 
@@ -23,7 +23,7 @@ public class FileEntityBuilderUtilTest {
     public void methodGetCollectionFromFileShouldRetrieveAllSpaceshipEntities() throws IOException {
         int expectedEntityAmount = 30;
         FileEntityBuilderUtil<Spaceship> entityBuilder = new FileEntityBuilderUtil<>(Spaceship.class);
-        Collection<Spaceship> collection = entityBuilder.getSetFromFile("input/spaceships");
+        Collection<Spaceship> collection = entityBuilder.getCollectionFromFile("input/spaceships");
         Assertions.assertEquals(expectedEntityAmount, collection.size());
     }
 
@@ -31,7 +31,7 @@ public class FileEntityBuilderUtilTest {
     public void methodGetCollectionFromFileShouldRetrieveAllPlanetEntities() throws IOException {
         int expectedEntityAmount = 34;
         FileEntityBuilderUtil<Planet> entityBuilder = new FileEntityBuilderUtil<>(Planet.class);
-        Collection<Planet> collection = entityBuilder.getSetFromFile("input/spacemap");
+        Collection<Planet> collection = entityBuilder.getCollectionFromFile("input/spacemap");
         Assertions.assertEquals(expectedEntityAmount, collection.size());
     }
 }

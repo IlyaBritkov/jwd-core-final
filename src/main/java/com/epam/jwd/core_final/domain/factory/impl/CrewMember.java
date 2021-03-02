@@ -34,4 +34,6 @@ public class CrewMember extends AbstractBaseEntity {
         this.rank = rank;
     }
 
+
+
 }

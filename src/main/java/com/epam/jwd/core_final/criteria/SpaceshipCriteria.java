@@ -2,6 +2,7 @@ package com.epam.jwd.core_final.criteria;
 
 import com.epam.jwd.core_final.domain.Role;
 import com.epam.jwd.core_final.domain.factory.impl.Spaceship;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -32,8 +33,8 @@ public class SpaceshipCriteria extends Criteria<Spaceship> {
         return new SpaceshipCriteriaBuilder(SpaceshipCriteria.class);
     }
 
-    @Getter
-    protected static class SpaceshipCriteriaBuilder extends CriteriaBuilder<SpaceshipCriteria, SpaceshipCriteriaBuilder> {
+    @Getter(AccessLevel.PROTECTED)
+    public static class SpaceshipCriteriaBuilder extends CriteriaBuilder<SpaceshipCriteria, SpaceshipCriteriaBuilder> {
         @Nullable
         private Map<Role, Short> crew;
         @Nullable

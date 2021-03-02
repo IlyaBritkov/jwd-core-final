@@ -5,6 +5,7 @@ import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
 import com.epam.jwd.core_final.domain.factory.impl.FlightMission;
 import com.epam.jwd.core_final.domain.factory.impl.Planet;
 import com.epam.jwd.core_final.domain.factory.impl.Spaceship;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -48,8 +49,8 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
         return new FlightMissionCriteriaBuilder(FlightMissionCriteria.class);
     }
 
-    @Getter
-    protected static class FlightMissionCriteriaBuilder extends CriteriaBuilder<FlightMissionCriteria, FlightMissionCriteriaBuilder> {
+    @Getter(AccessLevel.PROTECTED)
+    public static class FlightMissionCriteriaBuilder extends CriteriaBuilder<FlightMissionCriteria, FlightMissionCriteriaBuilder> {
         @Nullable
         private String missionName;
         @Nullable

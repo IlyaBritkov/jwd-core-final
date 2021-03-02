@@ -3,6 +3,7 @@ package com.epam.jwd.core_final.criteria;
 import com.epam.jwd.core_final.domain.Rank;
 import com.epam.jwd.core_final.domain.Role;
 import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -32,8 +33,8 @@ public class CrewMemberCriteria extends Criteria<CrewMember> {
         return new CrewMemberCriteriaBuilder(CrewMemberCriteria.class);
     }
 
-    @Getter
-    protected static class CrewMemberCriteriaBuilder extends CriteriaBuilder<CrewMemberCriteria, CrewMemberCriteriaBuilder> {
+    @Getter(AccessLevel.PROTECTED)
+    public static class CrewMemberCriteriaBuilder extends CriteriaBuilder<CrewMemberCriteria, CrewMemberCriteriaBuilder> {
         @Nullable
         private Role role;
         @Nullable

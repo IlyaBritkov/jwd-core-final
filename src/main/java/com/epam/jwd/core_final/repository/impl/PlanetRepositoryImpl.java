@@ -2,18 +2,18 @@ package com.epam.jwd.core_final.repository.impl;
 
 import com.epam.jwd.core_final.context.impl.NassaContext;
 import com.epam.jwd.core_final.domain.factory.impl.Planet;
-import com.epam.jwd.core_final.repository.BaseRepository;
+import com.epam.jwd.core_final.repository.PlanetRepository;
 import com.epam.jwd.core_final.util.FileEntityBuilderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * Singleton
  **/
-public class PlanetRepositoryImpl implements BaseRepository<Planet> {
+public class PlanetRepositoryImpl implements PlanetRepository {
     private final Logger logger = LoggerFactory.getLogger(PlanetRepositoryImpl.class);
     private static PlanetRepositoryImpl INSTANCE;
     private final FileEntityBuilderUtil<Planet> entityBuilder = new FileEntityBuilderUtil<>(Planet.class);
@@ -29,9 +29,9 @@ public class PlanetRepositoryImpl implements BaseRepository<Planet> {
     }
 
     @Override
-    public Collection<Planet> findAll() throws IOException {
+    public Set<Planet> findAll() throws IOException {
         String filePath = NassaContext.getApplicationProperties().getInputRootDir() + "/" + NassaContext.getApplicationProperties().getPlanetsFileName();
         logger.debug("All entities from input file were retrieved");
-        return entityBuilder.getSetFromFile(filePath);
+        return (Set<Planet>) entityBuilder.getCollectionFromFile(filePath);
     }
 }

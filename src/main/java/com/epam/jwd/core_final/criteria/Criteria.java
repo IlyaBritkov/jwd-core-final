@@ -1,6 +1,7 @@
 package com.epam.jwd.core_final.criteria;
 
 import com.epam.jwd.core_final.domain.factory.impl.BaseEntity;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,12 +25,11 @@ public abstract class Criteria<T1 extends BaseEntity> {
     protected Criteria() {
     }
 
-
     /**
      * @type T2 - type of Builder
      * @type T3 - type of class that built by builder
      **/
-    @Getter
+    @Getter(AccessLevel.PROTECTED)
     protected abstract static class CriteriaBuilder<T3 extends Criteria<?>, T2 extends BaseBuilder<T2, T3>>
             implements BaseBuilder<T2, T3> {
         @Nullable

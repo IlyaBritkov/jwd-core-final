@@ -42,7 +42,7 @@ public class FileEntityBuilderUtil<T extends BaseEntity> {
     /**
      * @param filePath - file we are reading from
      **/
-    public Collection<T> getSetFromFile(String filePath) throws IOException {
+    public Collection<T> getCollectionFromFile(String filePath) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(Objects.requireNonNull(FileEntityBuilderUtil.class.getClassLoader().getResourceAsStream(filePath))));
         final Collection<T> collection = new HashSet<>();

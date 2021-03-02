@@ -32,6 +32,13 @@
         <appender-ref ref="consoleAppender"/>
     </category>
 
+    <category name="com.epam.jwd.core_final.domain.factory.impl" additivity="false">
+        <!--Options: all, trace, debug, info, warn, error, fatal-->
+        <priority value="info"/>
+        <appender-ref ref="consoleAppender"/>
+    </category>
+
+
     <category name="com.epam.jwd.core_final.repository" additivity="false">
         <!--Options: all, trace, debug, info, warn, error, fatal-->
         <priority value="debug"/>
@@ -42,6 +49,7 @@
         <!--Options: all, trace, debug, info, warn, error, fatal-->
         <priority value="info"/>
         <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="fileAppender"/>
     </category>
 
 </log4j:configuration>
