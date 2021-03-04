@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class FileEntityBuilderUtil<T extends BaseEntity> {
-    private final EntityBuilder<T> entityBuilder;
+    private final FileEntityBuilder<T> fileEntityBuilder;
     private final Pattern pattern;
 
     /**
@@ -26,14 +27,14 @@ public class FileEntityBuilderUtil<T extends BaseEntity> {
     @SuppressWarnings("unchecked")
     public FileEntityBuilderUtil(Class<T> tClass) {
         if (tClass == CrewMember.class) {
-            pattern = Pattern.compile(".+?;");// role,name,rank;
-            entityBuilder = (EntityBuilder<T>) new CrewMemberEntityBuilder();
+            pattern = Pattern.compile(".+?;"); // role,name,rank;
+            fileEntityBuilder = (FileEntityBuilder<T>) new CrewMemberFileEntityBuilder();
         } else if (tClass == Spaceship.class) {
             pattern = Pattern.compile("(.+?[;|{\"}])+?$");// name;distance;crew {roleid:count,roleid:count,roleid:count,roleid:count}
-            entityBuilder = (EntityBuilder<T>) new SpaceshipEntityBuilder();
+            fileEntityBuilder = (FileEntityBuilder<T>) new SpaceshipFileEntityBuilder();
         } else if (tClass == Planet.class) {
             pattern = Pattern.compile("(.+?,)+?$"); // null,planet,null ...
-            entityBuilder = (EntityBuilder<T>) new PlanetEntityBuilder();
+            fileEntityBuilder = (FileEntityBuilder<T>) new PlanetFileEntityBuilder();
         } else {
             throw new UnknownEntityException(tClass.getSimpleName());
         }
@@ -43,19 +44,31 @@ public class FileEntityBuilderUtil<T extends BaseEntity> {
      * @param filePath - file we are reading from
      **/
     public Collection<T> getCollectionFromFile(String filePath) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(Objects.requireNonNull(FileEntityBuilderUtil.class.getClassLoader().getResourceAsStream(filePath))));
         final Collection<T> collection = new HashSet<>();
-        @Nullable List<String> hashInputFields = null;
 
-        while (bufferedReader.ready()) {
-            String line = bufferedReader.readLine().trim();
-            if (line.startsWith("#")) {
-                hashInputFields = entityBuilder.calculateHashInputFields(line);
-            } else {
-                collection.addAll(entityBuilder.createEntities(pattern, hashInputFields, line));
+        try (BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(Objects.requireNonNull(FileEntityBuilderUtil.class.getClassLoader().getResourceAsStream(filePath))))) {
+
+            @Nullable List<String> hashInputFields = null;
+            while (bufferedReader.ready()) {
+                String line = bufferedReader.readLine().trim();
+                if (line.startsWith("#")) {
+                    hashInputFields = fileEntityBuilder.calculateHashInputFields(line);
+                } else {
+                    collection.addAll(fileEntityBuilder.createEntitiesFromString(pattern, hashInputFields, line));
+                }
             }
         }
         return collection;
     }
+
+    public T writeEntityToFile(String filePath, T entity) throws RuntimeException, IOException, URISyntaxException {
+        fileEntityBuilder.writeEntityToFile(filePath, entity);
+        return entity;
+    }
+
+     public T deleteEntityFromFile(String filePath,T entity) throws IOException, URISyntaxException {
+         fileEntityBuilder.deleteEntityFromFile(filePath, entity);
+         return entity;
+     }
 }

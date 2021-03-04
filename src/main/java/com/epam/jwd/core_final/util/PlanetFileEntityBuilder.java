@@ -5,6 +5,8 @@ import com.epam.jwd.core_final.domain.factory.impl.Planet;
 import com.epam.jwd.core_final.domain.factory.impl.PlanetFactory;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -12,11 +14,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class PlanetEntityBuilder implements EntityBuilder<Planet> {
+class PlanetFileEntityBuilder implements FileEntityBuilder<Planet> {
     private final PlanetFactory factory;
     private int rowCounter = 1;
 
-    PlanetEntityBuilder() {
+    PlanetFileEntityBuilder() {
         this.factory = PlanetFactory.getInstance();
     }
 
@@ -29,7 +31,7 @@ class PlanetEntityBuilder implements EntityBuilder<Planet> {
      * Method creates entities founded in input line
      **/
     @Override
-    public Collection<Planet> createEntities(Pattern pattern, List<String> hashInputFields, String line) {
+    public Collection<Planet> createEntitiesFromString(Pattern pattern, List<String> hashInputFields, String line) {
         Collection<Planet> collection = new HashSet<>();
         Matcher matcher = pattern.matcher(line);
         while (matcher.find()) {
@@ -41,6 +43,18 @@ class PlanetEntityBuilder implements EntityBuilder<Planet> {
         }
 
         return collection;
+    }
+
+    @Override
+    // todo ? :)
+    public Planet writeEntityToFile(String filePath, Planet entity) throws IOException {
+        return null;
+    }
+
+    @Override
+    // todo
+    public Planet deleteEntityFromFile(String filePath, Planet entity) throws IOException, URISyntaxException {
+        return null;
     }
 
     private Collection<Planet> buildEntities(List<String> fields) {

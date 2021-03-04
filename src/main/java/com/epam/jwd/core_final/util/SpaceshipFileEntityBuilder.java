@@ -6,16 +6,18 @@ import com.epam.jwd.core_final.domain.factory.impl.SpaceshipFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-class SpaceshipEntityBuilder implements EntityBuilder<Spaceship> {
-    private final Logger logger = LoggerFactory.getLogger(SpaceshipEntityBuilder.class);
+class SpaceshipFileEntityBuilder implements FileEntityBuilder<Spaceship> {
+    private final Logger logger = LoggerFactory.getLogger(SpaceshipFileEntityBuilder.class);
     private final SpaceshipFactory factory;
 
-    SpaceshipEntityBuilder() {
+    SpaceshipFileEntityBuilder() {
         this.factory = SpaceshipFactory.getInstance();
     }
 
@@ -31,7 +33,7 @@ class SpaceshipEntityBuilder implements EntityBuilder<Spaceship> {
     }
 
     @Override
-    public Collection<Spaceship> createEntities(Pattern pattern, List<String> hashInputFields, String line) {
+    public Collection<Spaceship> createEntitiesFromString(Pattern pattern, List<String> hashInputFields, String line) {
         Collection<Spaceship> collection = new HashSet<>();
         Matcher matcher = pattern.matcher(line);
         while (matcher.find()) {
@@ -52,6 +54,18 @@ class SpaceshipEntityBuilder implements EntityBuilder<Spaceship> {
         }
 
         return collection;
+    }
+
+    @Override
+    // todo
+    public Spaceship writeEntityToFile(String filePath, Spaceship entity) throws IOException {
+        return null;
+    }
+
+    @Override
+    // todo
+    public Spaceship deleteEntityFromFile(String filePath, Spaceship entity) throws IOException, URISyntaxException {
+        return null;
     }
 
     private Spaceship buildEntity(List<String> hashInputFields, List<String> fields) {

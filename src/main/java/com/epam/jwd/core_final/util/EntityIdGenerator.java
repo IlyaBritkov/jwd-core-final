@@ -2,6 +2,7 @@ package com.epam.jwd.core_final.util;
 
 import com.epam.jwd.core_final.domain.factory.impl.*;
 import com.epam.jwd.core_final.exception.UnknownEntityException;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class EntityIdGenerator {
     private static final Logger logger = LoggerFactory.getLogger(EntityIdGenerator.class);
 
+    @Getter
     private static Long crewMemberId = 1L;
     private static Long flightMissionId = 1L;
     private static Long spaceshipId = 1L;

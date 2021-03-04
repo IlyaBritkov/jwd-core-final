@@ -23,7 +23,7 @@ public interface SpaceshipService {
     // todo create custom exception for case, when spaceship is not able to be assigned
     void assignSpaceshipOnMission(Spaceship crewMember) throws RuntimeException;
 
-    // todo create custom exception for case, when crewMember is not able to be created (for example - duplicate.
+    // todo create custom exception for case, when crewMember is not able to be created (for example - duplicate).
     // spaceship unique criteria - only name!
     Spaceship createSpaceship(Spaceship spaceship) throws RuntimeException;
 }

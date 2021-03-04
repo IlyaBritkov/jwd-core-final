@@ -22,7 +22,7 @@ public abstract class AbstractBaseEntity implements BaseEntity {
 
     public AbstractBaseEntity(@NotNull Long id,@NotNull String name) {
         this.id = id;
-        this.name = name;
+        this.name = name.trim();
     }
 
     @Override

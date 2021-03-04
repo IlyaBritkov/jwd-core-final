@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Set;
 
@@ -17,7 +18,8 @@ import java.util.Set;
 public class CrewRepositoryImpl implements CrewRepository {
     private final Logger logger = LoggerFactory.getLogger(CrewRepositoryImpl.class);
     private static CrewRepositoryImpl INSTANCE;
-    private final FileEntityBuilderUtil<CrewMember> entityBuilder = new FileEntityBuilderUtil<>(CrewMember.class);
+    private final FileEntityBuilderUtil<CrewMember> fileEntityBuilder = new FileEntityBuilderUtil<>(CrewMember.class);
+    private String filePath = NassaContext.getApplicationProperties().getInputRootDir() + "/" + NassaContext.getApplicationProperties().getCrewFileName();
 
     private CrewRepositoryImpl() {
     }
@@ -31,10 +33,31 @@ public class CrewRepositoryImpl implements CrewRepository {
 
     @Override
     public Set<CrewMember> findAll() throws IOException {
-        String filePath = NassaContext.getApplicationProperties().getInputRootDir() + "/" + NassaContext.getApplicationProperties().getCrewFileName();
-        Collection<CrewMember> collection = entityBuilder.getCollectionFromFile(filePath);
+        Collection<CrewMember> collection = fileEntityBuilder.getCollectionFromFile(filePath);
         logger.debug("All entities from input file were retrieved");
         return (Set<CrewMember>) collection;
+    }
+
+    @Override
+    public CrewMember createCrewMember(CrewMember crewMember) throws RuntimeException {
+        try {
+            return fileEntityBuilder.writeEntityToFile(filePath, crewMember);
+        } catch (IOException | URISyntaxException e) {
+            logger.error("An exception was thrown: {}", e.toString());
+            e.printStackTrace();
+        }
+        return crewMember;
+    }
+
+    @Override
+    public CrewMember deleteCrewMember(CrewMember crewMember) {
+        try {
+            return fileEntityBuilder.deleteEntityFromFile(filePath, crewMember);
+        } catch (IOException | URISyntaxException e) {
+            logger.error("An exception was thrown: {}", e.toString());
+            e.printStackTrace();
+        }
+        return crewMember;
     }
 
 }

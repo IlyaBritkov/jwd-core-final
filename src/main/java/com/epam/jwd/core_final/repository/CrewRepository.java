@@ -7,4 +7,9 @@ import java.util.Collection;
 
 public interface CrewRepository {
     Collection<CrewMember> findAll() throws IOException;
+
+    CrewMember createCrewMember(CrewMember crewMember) throws RuntimeException;
+
+    CrewMember deleteCrewMember(CrewMember crewMember);
+
 }
