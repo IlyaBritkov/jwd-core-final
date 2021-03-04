@@ -8,4 +8,8 @@ import java.util.Collection;
 public interface SpaceshipsRepository {
     Collection<Spaceship> findAll() throws IOException;
 
+    Spaceship createSpaceship(Spaceship spaceship) throws RuntimeException;
+
+    Spaceship deleteSpaceship(Spaceship spaceship);
+
 }

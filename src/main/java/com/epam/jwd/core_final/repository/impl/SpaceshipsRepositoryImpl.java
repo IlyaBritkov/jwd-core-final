@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Set;
 
 /**
@@ -16,7 +17,9 @@ import java.util.Set;
 public class SpaceshipsRepositoryImpl implements SpaceshipsRepository {
     private final Logger logger = LoggerFactory.getLogger(SpaceshipsRepositoryImpl.class);
     private static SpaceshipsRepositoryImpl INSTANCE;
-    private final FileEntityBuilderUtil<Spaceship> entityBuilder = new FileEntityBuilderUtil<>(Spaceship.class);
+    private final FileEntityBuilderUtil<Spaceship> fileEntityBuilder = new FileEntityBuilderUtil<>(Spaceship.class);
+
+    private String filePath = NassaContext.getApplicationProperties().getInputRootDir() + "/" + NassaContext.getApplicationProperties().getSpaceshipsFileName();
 
 
     private SpaceshipsRepositoryImpl() {
@@ -33,6 +36,28 @@ public class SpaceshipsRepositoryImpl implements SpaceshipsRepository {
     public Set<Spaceship> findAll() throws IOException {
         String filePath = NassaContext.getApplicationProperties().getInputRootDir() + "/" + NassaContext.getApplicationProperties().getSpaceshipsFileName();
         logger.debug("All entities from input file were retrieved");
-        return (Set<Spaceship>) entityBuilder.getCollectionFromFile(filePath);
+        return (Set<Spaceship>) fileEntityBuilder.getCollectionFromFile(filePath);
+    }
+
+    @Override
+    public Spaceship createSpaceship(Spaceship spaceship) throws RuntimeException {
+        try {
+            return fileEntityBuilder.writeEntityToFile(filePath, spaceship);
+        } catch (IOException | URISyntaxException e) {
+            logger.error("An exception was thrown: {}", e.toString());
+            e.printStackTrace();
+        }
+        return spaceship;
+    }
+
+    @Override
+    public Spaceship deleteSpaceship(Spaceship spaceship) {
+        try {
+            return fileEntityBuilder.deleteEntityFromFile(filePath, spaceship);
+        } catch (IOException | URISyntaxException e) {
+            logger.error("An exception was thrown: {}", e.toString());
+            e.printStackTrace();
+        }
+        return spaceship;
     }
 }

@@ -23,7 +23,7 @@ public interface ApplicationContext {
 
     <T extends BaseEntity> void refreshCash(Class<T> tClass) throws IOException;
 
-    boolean isCashValid();
+    <T extends BaseEntity> boolean isCashValid(Class<T> tClass);
 
-    void setCashValid(boolean isCashValid);
+    <T extends BaseEntity> void setCashValid(Class<T> tClass, boolean isCashValid);
 }

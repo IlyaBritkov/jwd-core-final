@@ -59,7 +59,7 @@ class CrewMemberFileEntityBuilder implements FileEntityBuilder<CrewMember> {
             try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(CrewMemberFileEntityBuilder.class.getClassLoader()
                     .getResourceAsStream(filePath))))) {
                 String hashLine = bufferedReader.readLine();
-                String stringEntity = createStringFromEntity(calculateHashInputFields(hashLine), entity);
+                String stringEntity = createStringRepresentationFromEntity(calculateHashInputFields(hashLine), entity);
                 writeEntityToFile(filePath, stringEntity);
             }
         }
@@ -80,7 +80,7 @@ class CrewMemberFileEntityBuilder implements FileEntityBuilder<CrewMember> {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(CrewMemberFileEntityBuilder.class.getClassLoader()
                 .getResourceAsStream(filePath))))) {
             String hashLine = bufferedReader.readLine();
-            String stringEntity = createStringFromEntity(calculateHashInputFields(hashLine), entity);
+            String stringEntity = createStringRepresentationFromEntity(calculateHashInputFields(hashLine), entity);
             deleteEntityFromFile(filePath, stringEntity);
         }
         return entity;
@@ -103,7 +103,7 @@ class CrewMemberFileEntityBuilder implements FileEntityBuilder<CrewMember> {
         logger.info("Entity: {} was deleted from file {}", stringEntity, filePath);
     }
 
-    private String createStringFromEntity(List<String> hashInputFields, CrewMember entity) {
+    private String createStringRepresentationFromEntity(List<String> hashInputFields, CrewMember entity) {
         List<Field> unsortedFields = ReflectUtil.getDeepAllFields(CrewMember.class).stream()
                 .filter(e -> hashInputFields.contains(e.getName()))
                 .collect(Collectors.toList());
@@ -146,7 +146,7 @@ class CrewMemberFileEntityBuilder implements FileEntityBuilder<CrewMember> {
     private boolean checkIfStringEntityIsAlreadyExist(String filePath, String stringEntityData) throws IOException {
         try (BufferedReader bufferedReader =
                      new BufferedReader(new InputStreamReader(Objects.requireNonNull(CrewMemberFileEntityBuilder.class.getClassLoader()
-                             .getResourceAsStream(filePath))));) {
+                             .getResourceAsStream(filePath))))) {
             while (bufferedReader.ready()) {
                 if (bufferedReader.readLine().contains(stringEntityData)) {
                     logger.debug("Entity: {} is already exist in file", stringEntityData);

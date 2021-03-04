@@ -9,7 +9,7 @@ import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
 import com.epam.jwd.core_final.domain.factory.impl.CrewMemberFactory;
 import com.epam.jwd.core_final.exception.EntityCreationException;
 import com.epam.jwd.core_final.exception.InvalidStateException;
-import com.epam.jwd.core_final.exception.UnreachableCrewMemberException;
+import com.epam.jwd.core_final.exception.UnreachableSpaceItemException;
 import com.epam.jwd.core_final.util.EntityIdGenerator;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -19,8 +19,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class CrewServiceImplTest {
-    private final CrewServiceImpl crewService = CrewServiceImpl.getInstance();
     private final ApplicationContext context = Main.getApplicationContext();
+    private final CrewServiceImpl crewService = CrewServiceImpl.getInstance();
     private final CrewMemberFactory crewMemberFactory = CrewMemberFactory.getInstance();
 
     static {
@@ -29,6 +29,11 @@ public class CrewServiceImplTest {
         } catch (InvalidStateException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void crewServiceImplShouldBeSingleton() {
+        Assertions.assertSame(CrewServiceImpl.getInstance(), CrewServiceImpl.getInstance());
     }
 
     @Test
@@ -60,10 +65,8 @@ public class CrewServiceImplTest {
     }
 
     @Test
-    public void methodAssignCrewMemberOnMissionShouldNotThrowException() throws InvalidStateException {
-        context.emptyAllCash();
-        EntityIdGenerator.resetAll();
-        context.init();
+    public void methodAssignCrewMemberOnMissionShouldNotThrowException() throws InvalidStateException, IOException {
+        context.refreshCash(CrewMember.class);
 
         final CrewMember crewMember = crewService.findAllCrewMembers().get(0);
         crewService.assignCrewMemberOnMission(crewMember);
@@ -72,7 +75,7 @@ public class CrewServiceImplTest {
         Assertions.assertEquals(expectedBol, crewMember.getIsReadyForNextMissions());
     }
 
-    @Test(expected = UnreachableCrewMemberException.class)
+    @Test(expected = UnreachableSpaceItemException.class)
     public void methodAssignCrewMemberOnMissionShouldThrowException() throws InvalidStateException {
         context.emptyAllCash();
         EntityIdGenerator.resetAll();
@@ -85,7 +88,7 @@ public class CrewServiceImplTest {
     }
 
     @Test
-    public void methodCreateCrewMemberShouldAddNewCrewMember() throws InvalidStateException, IOException {
+    public void methodCreateCrewMemberShouldAddNewCrewMember() throws IOException {
         context.refreshCash(CrewMember.class);
 
         int expectedSize = context.retrieveBaseEntityList(CrewMember.class).size() + 1;

@@ -44,6 +44,6 @@ public class SpaceshipFactoryTest {
         Spaceship spaceship = factory.create(name, flightDistance, crew);
         Assertions.assertEquals(name, spaceship.getName());
         Assertions.assertEquals(crew, spaceship.getCrew());
-        Assertions.assertEquals(flightDistance, spaceship.getFlightDistance());
+        Assertions.assertEquals(flightDistance, spaceship.getDistance());
     }
 }

@@ -21,10 +21,8 @@ import org.jetbrains.annotations.NotNull;
 @ToString(callSuper = true)
 public class CrewMember extends AbstractBaseEntity {
     @NotNull
-    @EqualsAndHashCode.Include
     private Role role;
     @NotNull
-    @EqualsAndHashCode.Include
     private Rank rank;
     private Boolean isReadyForNextMissions = true;
 

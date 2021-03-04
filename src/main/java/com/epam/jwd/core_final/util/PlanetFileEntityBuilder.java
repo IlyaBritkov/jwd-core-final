@@ -3,10 +3,9 @@ package com.epam.jwd.core_final.util;
 import com.codepoetics.protonpack.StreamUtils;
 import com.epam.jwd.core_final.domain.factory.impl.Planet;
 import com.epam.jwd.core_final.domain.factory.impl.PlanetFactory;
+import com.epam.jwd.core_final.exception.UnknownEntityException;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -46,15 +45,13 @@ class PlanetFileEntityBuilder implements FileEntityBuilder<Planet> {
     }
 
     @Override
-    // todo ? :)
-    public Planet writeEntityToFile(String filePath, Planet entity) throws IOException {
-        return null;
+    public Planet writeEntityToFile(String filePath, Planet entity) {
+        throw new UnknownEntityException(entity.getName());
     }
 
     @Override
-    // todo
-    public Planet deleteEntityFromFile(String filePath, Planet entity) throws IOException, URISyntaxException {
-        return null;
+    public Planet deleteEntityFromFile(String filePath, Planet entity) {
+        throw new UnknownEntityException(entity.getName());
     }
 
     private Collection<Planet> buildEntities(List<String> fields) {

@@ -16,6 +16,7 @@ import com.epam.jwd.core_final.repository.impl.CrewRepositoryImpl;
 import com.epam.jwd.core_final.repository.impl.PlanetRepositoryImpl;
 import com.epam.jwd.core_final.repository.impl.SpaceshipsRepositoryImpl;
 import com.epam.jwd.core_final.util.PropertyReaderUtil;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -32,9 +33,13 @@ public class NassaContext implements ApplicationContext {
     private final Logger logger = LoggerFactory.getLogger(NassaContext.class);
     private static final ApplicationProperties applicationProperties = new ApplicationProperties(PropertyReaderUtil.getProperties());
 
-    @Getter
-    @Setter
-    private boolean isCashValid = true;
+    @Getter(AccessLevel.PRIVATE)
+    @Setter(AccessLevel.PRIVATE)
+    private boolean isCrewMembersCashValid = true;
+
+    @Getter(AccessLevel.PRIVATE)
+    @Setter(AccessLevel.PRIVATE)
+    private boolean isSpaceshipsCashValid = true;
 
     // no getters/setters for them
     private Set<CashedEntity<CrewMember>> crewMembers = new HashSet<>();
@@ -152,10 +157,12 @@ public class NassaContext implements ApplicationContext {
             crewMembers = crewRepository.findAll().stream()
                     .map((Function<CrewMember, CashedEntity<CrewMember>>) CashedEntity::new)
                     .collect(Collectors.toSet());
+            setCrewMembersCashValid(true);
         } else if (tClass == Spaceship.class) {
             spaceships = spaceshipsRepository.findAll().stream()
                     .map((Function<Spaceship, CashedEntity<Spaceship>>) CashedEntity::new)
                     .collect(Collectors.toSet());
+            setSpaceshipsCashValid(true);
         } else if (tClass == Planet.class) {
             planetMap = planetRepository.findAll().stream()
                     .map((Function<Planet, CashedEntity<Planet>>) CashedEntity::new)
@@ -164,5 +171,27 @@ public class NassaContext implements ApplicationContext {
             throw new UnknownEntityException(tClass.getSimpleName());
         }
         logger.info("Cash of {} was refreshed", tClass.getSimpleName());
+    }
+
+    @Override
+    public <T extends BaseEntity> boolean isCashValid(Class<T> tClass) {
+        if (tClass == CrewMember.class) {
+            return isCrewMembersCashValid();
+        } else if (tClass == Spaceship.class) {
+            return isSpaceshipsCashValid();
+        } else {
+            throw new UnknownEntityException(tClass.getSimpleName());
+        }
+    }
+
+    @Override
+    public <T extends BaseEntity> void setCashValid(Class<T> tClass, boolean isCashValid) {
+        if (tClass == CrewMember.class) {
+            setCrewMembersCashValid(isCashValid);
+        } else if (tClass == Spaceship.class) {
+            setSpaceshipsCashValid(isCashValid);
+        } else {
+            throw new UnknownEntityException(tClass.getSimpleName());
+        }
     }
 }

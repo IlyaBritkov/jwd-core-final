@@ -6,7 +6,7 @@ import com.epam.jwd.core_final.criteria.CrewMemberCriteria;
 import com.epam.jwd.core_final.criteria.Criteria;
 import com.epam.jwd.core_final.domain.CashedEntity;
 import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
-import com.epam.jwd.core_final.exception.UnreachableCrewMemberException;
+import com.epam.jwd.core_final.exception.UnreachableSpaceItemException;
 import com.epam.jwd.core_final.repository.CrewRepository;
 import com.epam.jwd.core_final.repository.impl.CrewRepositoryImpl;
 import com.epam.jwd.core_final.service.CrewService;
@@ -42,7 +42,7 @@ public class CrewServiceImpl implements CrewService {
 
     @Override
     public List<CrewMember> findAllCrewMembers() {
-        if (!context.isCashValid()) {
+        if (!context.isCashValid(CrewMember.class)) {
             try {
                 context.refreshCash(CrewMember.class);
             } catch (IOException e) {
@@ -50,7 +50,10 @@ public class CrewServiceImpl implements CrewService {
                 e.printStackTrace();
             }
         }
-        return context.retrieveBaseEntityList(CrewMember.class).stream().filter(CashedEntity::isValid).map(CashedEntity::getEntity).collect(Collectors.toList());
+        return context.retrieveBaseEntityList(CrewMember.class).stream()
+                .filter(CashedEntity::isValid)
+                .map(CashedEntity::getEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -60,10 +63,7 @@ public class CrewServiceImpl implements CrewService {
 
         List<CrewMember> crewMemberList = findAllCrewMembers();
 
-        List<CrewMember> crewMembers = crewMemberList
-                .stream()
-                .filter(entity -> ReflectUtil.compareOnFields(requiredFieldsList, criteria,
-                        entityFieldsList, entity)).collect(Collectors.toList());
+        List<CrewMember> crewMembers = findAllByFieldsOfCriteria(requiredFieldsList, criteria, entityFieldsList, crewMemberList);
         if (crewMembers.size() == 0) {
             try {
                 context.refreshCash(CrewMember.class);
@@ -74,12 +74,18 @@ public class CrewServiceImpl implements CrewService {
         }
 
         crewMemberList = findAllCrewMembers();
-        crewMembers = crewMemberList
-                .stream()
-                .filter(entity -> ReflectUtil.compareOnFields(requiredFieldsList, criteria,
-                        entityFieldsList, entity)).collect(Collectors.toList());
+        crewMembers = findAllByFieldsOfCriteria(requiredFieldsList, criteria, entityFieldsList, crewMemberList);
 
         return crewMembers;
+    }
+
+    private List<CrewMember> findAllByFieldsOfCriteria(List<Field> requiredFieldsList, Criteria<? extends CrewMember> criteria,
+                                                       List<Field> entityFieldsList, List<CrewMember> crewMemberList) {
+        return crewMemberList
+                .stream()
+                .filter(entity -> ReflectUtil.compareOnFields(requiredFieldsList, criteria,
+                        entityFieldsList, entity))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -101,7 +107,7 @@ public class CrewServiceImpl implements CrewService {
     @Override
     public void assignCrewMemberOnMission(CrewMember crewMember) throws RuntimeException {
         if (!crewMember.getIsReadyForNextMissions()) {
-            throw new UnreachableCrewMemberException(crewMember);
+            throw new UnreachableSpaceItemException(crewMember);
         } else {
             crewMember.setIsReadyForNextMissions(false);
         }
@@ -110,14 +116,13 @@ public class CrewServiceImpl implements CrewService {
     @Override
     public CrewMember createCrewMember(CrewMember crewMember) throws RuntimeException {
         crewRepository.createCrewMember(crewMember);
-        context.setCashValid(false);
+        context.setCashValid(CrewMember.class, false);
         return crewMember;
     }
 
     @Override
     public CrewMember deleteCrewMember(CrewMember crewMember) {
         context.deleteFromCash(crewMember);
-        context.setCashValid(false);
         crewRepository.deleteCrewMember(crewMember);
         return crewMember;
     }
