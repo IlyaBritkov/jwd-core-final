@@ -30,7 +30,7 @@ public class Planet extends AbstractBaseEntity {
     @Setter
     @EqualsAndHashCode
     @ToString
-    static class Location {
+    public static class Location {
         private int x;
         private int y;
 

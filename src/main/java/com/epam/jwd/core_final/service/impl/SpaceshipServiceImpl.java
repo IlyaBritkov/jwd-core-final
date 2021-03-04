@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 /**
  * Singleton
  **/
-// todo cover by tests
 public class SpaceshipServiceImpl implements SpaceshipService {
     private final Logger logger = LoggerFactory.getLogger(SpaceshipServiceImpl.class);
     private static SpaceshipServiceImpl INSTANCE;
