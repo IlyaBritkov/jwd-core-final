@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class NassaContextTest {
-    private final NassaContext nassaContext = new NassaContext();
+    private final NassaContext nassaContext = NassaContext.getInstance();
 
     @Test
     public void methodRetrieveBaseEntityListShouldRetrieveAppropriateCollection() {
@@ -51,7 +51,7 @@ public class NassaContextTest {
 
     @Test
     public void methodRetrieveBaseEntityListShouldRetrieveAllPlanetEntities() throws InvalidStateException {
-        final NassaContext nassaContext = new NassaContext();
+        final NassaContext nassaContext = NassaContext.getInstance();
         nassaContext.emptyAllCash();
         nassaContext.init();
         int expectedEntityAmount = 34;

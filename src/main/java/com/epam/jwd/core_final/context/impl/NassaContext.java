@@ -26,7 +26,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Singleton
+ **/
 public class NassaContext implements ApplicationContext {
+    private static NassaContext INSTANCE;
     private final Logger logger = LoggerFactory.getLogger(NassaContext.class);
     private static final ApplicationProperties applicationProperties = new ApplicationProperties(PropertyReaderUtil.getProperties());
 
@@ -50,13 +54,23 @@ public class NassaContext implements ApplicationContext {
 
     private Set<CashedEntity<FlightMission>> flightMissions = new HashSet<>();
 
+    private NassaContext() {
+    }
+
+    public static NassaContext getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new NassaContext();
+        }
+        return INSTANCE;
+    }
+
     public static ApplicationProperties getApplicationProperties() {
         return NassaContext.applicationProperties;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends BaseEntity> Set<CashedEntity<T>> retrieveBaseEntityList(Class<T> tClass) {
+    public synchronized <T extends BaseEntity> Set<CashedEntity<T>> retrieveBaseEntityList(Class<T> tClass) {
         Set<?> collection = null;
         if (tClass == CrewMember.class) {
             collection = crewMembers;
@@ -165,7 +179,7 @@ public class NassaContext implements ApplicationContext {
     }
 
     @Override
-    public <T extends BaseEntity> void refreshCash(Class<T> tClass) {
+    public synchronized <T extends BaseEntity> void refreshCash(Class<T> tClass) {
         try {
             if (tClass == CrewMember.class) {
                 crewMembers = crewRepository.findAll().stream()

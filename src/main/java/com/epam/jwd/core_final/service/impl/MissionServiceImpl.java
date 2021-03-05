@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 /**
  * Singleton
  **/
-// todo cover by test
 public class MissionServiceImpl implements MissionService {
     private final Logger logger = LoggerFactory.getLogger(MissionServiceImpl.class);
     private static MissionServiceImpl INSTANCE;

@@ -10,6 +10,9 @@ public class Main {
 
     public static void main(String[] args) throws InvalidStateException {
         menu = Application.start();
+        Application.startRefreshing();
+        ApplicationMenu.printAvailableOptions();
+
     }
 
     public static ApplicationContext getApplicationContext() {

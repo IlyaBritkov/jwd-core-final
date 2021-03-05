@@ -21,21 +21,21 @@
     <category name="com.epam.jwd.core_final">
         <!--Options: all, trace, debug, info, warn, error, fatal-->
         <priority value="info"/>
-        <appender-ref ref="consoleAppender"/>
+  
         <appender-ref ref="fileAppender"/>
     </category>
 
     <category name="com.epam.jwd.core_final.context" additivity="false">
         <!--Options: all, trace, debug, info, warn, error, fatal-->
         <priority value="info"/>
-        <appender-ref ref="consoleAppender"/>
+  
         <appender-ref ref="fileAppender"/>
     </category>
 
     <category name="com.epam.jwd.core_final.domain.factory.impl" additivity="false">
         <!--Options: all, trace, debug, info, warn, error, fatal-->
         <priority value="info"/>
-        <appender-ref ref="consoleAppender"/>
+  
         <appender-ref ref="fileAppender"/>
     </category>
 
@@ -43,20 +43,20 @@
     <category name="com.epam.jwd.core_final.repository" additivity="false">
         <!--Options: all, trace, debug, info, warn, error, fatal-->
         <priority value="debug"/>
-        <appender-ref ref="consoleAppender"/>
+  
     </category>
 
     <category name="com.epam.jwd.core_final.util" additivity="false">
         <!--Options: all, trace, debug, info, warn, error, fatal-->
-        <priority value="info"/>
-        <appender-ref ref="consoleAppender"/>
+        <priority value="debug"/>
+  
         <appender-ref ref="fileAppender"/>
     </category>
 
     <category name="com.epam.jwd.core_final.util.CrewMemberFileEntityBuilder" additivity="false">
         <!--Options: all, trace, debug, info, warn, error, fatal-->
-        <priority value="debug"/>
-        <appender-ref ref="consoleAppender"/>
+        <priority value="info"/>
+  
     </category>
 
 </log4j:configuration>
