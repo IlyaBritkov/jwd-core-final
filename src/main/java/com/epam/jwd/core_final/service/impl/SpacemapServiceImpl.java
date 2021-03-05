@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ * Singleton
+ **/
 public class SpacemapServiceImpl implements SpacemapService {
     private final Logger logger = LoggerFactory.getLogger(SpacemapServiceImpl.class);
     private static SpacemapServiceImpl INSTANCE;

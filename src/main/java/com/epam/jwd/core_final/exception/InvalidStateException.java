@@ -9,7 +9,7 @@ public class InvalidStateException extends Exception {
         args = null;
     }
 
-    public InvalidStateException(Object[] args) {
+    public InvalidStateException(Object... args) {
         this.args = args;
     }
 

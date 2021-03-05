@@ -7,6 +7,7 @@ import com.epam.jwd.core_final.util.FileEntityBuilderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Set;
@@ -18,8 +19,7 @@ public class SpaceshipsRepositoryImpl implements SpaceshipsRepository {
     private final Logger logger = LoggerFactory.getLogger(SpaceshipsRepositoryImpl.class);
     private static SpaceshipsRepositoryImpl INSTANCE;
     private final FileEntityBuilderUtil<Spaceship> fileEntityBuilder = new FileEntityBuilderUtil<>(Spaceship.class);
-
-    private String filePath = NassaContext.getApplicationProperties().getInputRootDir() + "/" + NassaContext.getApplicationProperties().getSpaceshipsFileName();
+    private final String filePath = NassaContext.getApplicationProperties().getInputRootDir() + File.separator + NassaContext.getApplicationProperties().getSpaceshipsFileName();
 
 
     private SpaceshipsRepositoryImpl() {
@@ -53,7 +53,8 @@ public class SpaceshipsRepositoryImpl implements SpaceshipsRepository {
     @Override
     public Spaceship deleteSpaceship(Spaceship spaceship) {
         try {
-            return fileEntityBuilder.deleteEntityFromFile(filePath, spaceship);
+            spaceship = fileEntityBuilder.deleteEntityFromFile(filePath, spaceship);
+            logger.debug("Spaceship {} was deleted from file", spaceship);
         } catch (IOException | URISyntaxException e) {
             logger.error("An exception was thrown: {}", e.toString());
             e.printStackTrace();

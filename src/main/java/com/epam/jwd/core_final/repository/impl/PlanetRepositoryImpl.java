@@ -7,6 +7,7 @@ import com.epam.jwd.core_final.util.FileEntityBuilderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ public class PlanetRepositoryImpl implements PlanetRepository {
     private final Logger logger = LoggerFactory.getLogger(PlanetRepositoryImpl.class);
     private static PlanetRepositoryImpl INSTANCE;
     private final FileEntityBuilderUtil<Planet> entityBuilder = new FileEntityBuilderUtil<>(Planet.class);
+    private final String filePath = NassaContext.getApplicationProperties().getInputRootDir() + File.separator + NassaContext.getApplicationProperties().getPlanetsFileName();
 
     private PlanetRepositoryImpl() {
     }
@@ -30,8 +32,8 @@ public class PlanetRepositoryImpl implements PlanetRepository {
 
     @Override
     public Set<Planet> findAll() throws IOException {
-        String filePath = NassaContext.getApplicationProperties().getInputRootDir() + "/" + NassaContext.getApplicationProperties().getPlanetsFileName();
+        Set<Planet> planets = (Set<Planet>) entityBuilder.getCollectionFromFile(filePath);
         logger.debug("All entities from input file were retrieved");
-        return (Set<Planet>) entityBuilder.getCollectionFromFile(filePath);
+        return planets;
     }
 }

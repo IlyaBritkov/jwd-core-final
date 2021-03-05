@@ -1,7 +1,7 @@
 package com.epam.jwd.core_final.criteria;
 
 import com.epam.jwd.core_final.criteria.util.ReflectUtil;
-import com.epam.jwd.core_final.domain.MissionResult;
+import com.epam.jwd.core_final.domain.MissionStatus;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
@@ -24,12 +24,12 @@ public class FlightMissionCriteriaTest {
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = startDate.plusWeeks(3);
         Long distance = 1000L;
-        MissionResult missionResult = MissionResult.IN_PROGRESS;
+        MissionStatus missionStatus = MissionStatus.IN_PROGRESS;
 
-        List<?> expectedValues = Arrays.asList(id, name, startDate, endDate, distance, missionResult);
+        List<?> expectedValues = Arrays.asList(id, name, startDate, endDate, distance, missionStatus);
 
         FlightMissionCriteria flightMissionCriteria = FlightMissionCriteria.builder().
-                setId(id).setName(name).setStartDate(startDate).setEndDate(endDate).setDistance(distance).setMissionResult(missionResult).build();
+                setId(id).setName(name).setStartDate(startDate).setEndDate(endDate).setDistance(distance).setMissionStatus(missionStatus).build();
 
 
         List<Field> fields = ReflectUtil.getAllFields(new ArrayList<>(), FlightMissionCriteria.class);

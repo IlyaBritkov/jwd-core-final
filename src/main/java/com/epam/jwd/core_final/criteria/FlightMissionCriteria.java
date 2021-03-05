@@ -1,6 +1,6 @@
 package com.epam.jwd.core_final.criteria;
 
-import com.epam.jwd.core_final.domain.MissionResult;
+import com.epam.jwd.core_final.domain.MissionStatus;
 import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
 import com.epam.jwd.core_final.domain.factory.impl.FlightMission;
 import com.epam.jwd.core_final.domain.factory.impl.Planet;
@@ -36,7 +36,7 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
     @Nullable
     private List<? extends CrewMember> assignedCrew;
     @Nullable
-    private MissionResult missionResult;
+    private MissionStatus missionStatus;
     @Nullable
     private Planet from;
     @Nullable
@@ -64,7 +64,7 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
         @Nullable
         private List<? extends CrewMember> assignedCrew;
         @Nullable
-        private MissionResult missionResult;
+        private MissionStatus missionStatus;
         @Nullable
         private Planet from;
         @Nullable
@@ -104,8 +104,8 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
             return this;
         }
 
-        public FlightMissionCriteriaBuilder setMissionResult(@Nullable MissionResult missionResult) {
-            this.missionResult = missionResult;
+        public FlightMissionCriteriaBuilder setMissionStatus(@Nullable MissionStatus missionStatus) {
+            this.missionStatus = missionStatus;
             return this;
         }
 
@@ -120,15 +120,22 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
         }
 
         @Override
-        public FlightMissionCriteria build() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-            FlightMissionCriteria criteria = super.build();
+        public FlightMissionCriteria build() {
+            FlightMissionCriteria criteria = null;
+            try {
+                criteria = super.build();
+            } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
             criteria.setMissionName(this.getMissionName());
             criteria.setStartDate(this.getStartDate());
             criteria.setEndDate(this.getEndDate());
             criteria.setDistance(this.getDistance());
             criteria.setAssignedSpaceship(this.getAssignedSpaceship());
             criteria.setAssignedCrew(this.getAssignedCrew());
-            criteria.setMissionResult(this.getMissionResult());
+            criteria.setMissionStatus(this.getMissionStatus());
+            criteria.setFrom(this.getFrom());
+            criteria.setTo(this.getTo());
 
             return criteria;
         }

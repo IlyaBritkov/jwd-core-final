@@ -4,7 +4,6 @@ import com.epam.jwd.core_final.domain.CashedEntity;
 import com.epam.jwd.core_final.domain.factory.impl.BaseEntity;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 
-import java.io.IOException;
 import java.util.Collection;
 
 public interface ApplicationContext {
@@ -17,11 +16,13 @@ public interface ApplicationContext {
 
     <T extends BaseEntity> void emptyCash(Class<T> tClass);
 
+    <T extends BaseEntity> T addToCash(T entity);
+
     <T extends BaseEntity> void deleteFromCash(T entity);
 
-    void refreshAllCash() throws InvalidStateException, IOException;
+    void refreshAllCash();
 
-    <T extends BaseEntity> void refreshCash(Class<T> tClass) throws IOException;
+    <T extends BaseEntity> void refreshCash(Class<T> tClass);
 
     <T extends BaseEntity> boolean isCashValid(Class<T> tClass);
 

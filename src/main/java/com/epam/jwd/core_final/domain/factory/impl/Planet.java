@@ -21,7 +21,7 @@ public class Planet extends AbstractBaseEntity {
     @EqualsAndHashCode.Include
     private Location location;
 
-    public Planet(@NotNull String name, @NotNull Integer x, @NotNull Integer y) {
+    protected Planet(@NotNull String name, @NotNull Integer x, @NotNull Integer y) {
         super(EntityIdGenerator.getNextId(Planet.class), name);
         this.location = new Location(x, y);
     }

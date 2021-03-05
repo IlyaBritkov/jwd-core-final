@@ -62,8 +62,13 @@ public class SpaceshipCriteria extends Criteria<Spaceship> {
         }
 
         @Override
-        public SpaceshipCriteria build() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-            SpaceshipCriteria criteria = super.build();
+        public SpaceshipCriteria build() {
+            SpaceshipCriteria criteria = null;
+            try {
+                criteria = super.build();
+            } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
             criteria.setCrew(this.getCrew());
             criteria.setFlightDistance(this.getFlightDistance());
             criteria.setIsReadyForNextMissions(this.getIsReadyForNextMissions());

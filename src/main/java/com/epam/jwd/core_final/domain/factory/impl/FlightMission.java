@@ -1,6 +1,6 @@
 package com.epam.jwd.core_final.domain.factory.impl;
 
-import com.epam.jwd.core_final.domain.MissionResult;
+import com.epam.jwd.core_final.domain.MissionStatus;
 import com.epam.jwd.core_final.service.SpacemapService;
 import com.epam.jwd.core_final.util.EntityIdGenerator;
 import lombok.EqualsAndHashCode;
@@ -10,6 +10,7 @@ import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,11 +22,10 @@ import java.util.List;
  * distance {@link Long} - missions distance
  * assignedSpaceShift {@link Spaceship} - not defined by default
  * assignedCrew {@link java.util.List<CrewMember>} - list of missions members based on ship capacity - not defined by default
- * missionResult {@link MissionResult}
+ * missionResult {@link MissionStatus}
  * from {@link Planet}
  * to {@link Planet}
  */
-
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @ToString(callSuper = true)
@@ -60,10 +60,11 @@ public class FlightMission extends AbstractBaseEntity {
     private Spaceship assignedSpaceship;
 
     @Getter
-    private List<? extends CrewMember> assignedCrew;
+    private List<CrewMember> assignedCrew;
 
-    private MissionResult missionResult;
-
+    // custom getter
+    @Setter
+    private MissionStatus missionStatus;
 
     protected FlightMission(@NotNull String name, @NotNull String missionName, @NotNull LocalDateTime startDate,
                             @NotNull Planet from, @NotNull Planet to) {
@@ -72,27 +73,30 @@ public class FlightMission extends AbstractBaseEntity {
         this.startDate = startDate;
         this.from = from;
         this.to = to;
+        this.assignedCrew = new ArrayList<>();
         calculateFlightData();
         final LocalDateTime now = LocalDateTime.now();
         if (now.isBefore(startDate)) {
-            missionResult = MissionResult.PLANNED;
+            missionStatus = MissionStatus.PLANNED;
         } else if (now.isAfter(startDate) && now.isBefore(endDate)) {
-            missionResult = MissionResult.IN_PROGRESS;
+            missionStatus = MissionStatus.IN_PROGRESS;
         }
     }
 
-    public MissionResult getMissionResult() {
+    public MissionStatus getMissionStatus() {
         LocalDateTime now = LocalDateTime.now();
 
         if (now.isEqual(startDate) || now.isAfter(startDate) && now.isBefore(endDate)) {
-            setMissionResult(MissionResult.IN_PROGRESS);
+            setMissionStatus(MissionStatus.IN_PROGRESS);
         } else if (now.isAfter(endDate)) {
-            setMissionResult(MissionResult.COMPLETED);
+            setMissionStatus(MissionStatus.COMPLETED);
         }
-        return missionResult;
+        return missionStatus;
     }
 
     private void calculateFlightData() {
-        this.endDate = this.startDate.plusSeconds(SpacemapService.getDistanceBetweenPlanets(from, to));
+        int calculatedTimeDistance = SpacemapService.getDistanceBetweenPlanets(from, to);
+        this.endDate = this.startDate.plusSeconds(calculatedTimeDistance);
+        this.distance = (long) calculatedTimeDistance;
     }
 }

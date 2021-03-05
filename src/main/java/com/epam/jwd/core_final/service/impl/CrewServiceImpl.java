@@ -14,7 +14,6 @@ import com.epam.jwd.core_final.util.ReflectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
@@ -43,12 +42,7 @@ public class CrewServiceImpl implements CrewService {
     @Override
     public List<CrewMember> findAllCrewMembers() {
         if (!context.isCashValid(CrewMember.class)) {
-            try {
-                context.refreshCash(CrewMember.class);
-            } catch (IOException e) {
-                logger.error("Exception was thrown: {}", e.toString());
-                e.printStackTrace();
-            }
+            context.refreshCash(CrewMember.class);
         }
         return context.retrieveBaseEntityList(CrewMember.class).stream()
                 .filter(CashedEntity::isValid)
@@ -65,12 +59,7 @@ public class CrewServiceImpl implements CrewService {
 
         List<CrewMember> crewMembers = findAllByFieldsOfCriteria(requiredFieldsList, criteria, entityFieldsList, crewMemberList);
         if (crewMembers.size() == 0) {
-            try {
-                context.refreshCash(CrewMember.class);
-            } catch (IOException e) {
-                logger.error("Exception was thrown: {}", e.toString());
-                e.printStackTrace();
-            }
+            context.refreshCash(CrewMember.class);
         }
 
         crewMemberList = findAllCrewMembers();
@@ -94,12 +83,7 @@ public class CrewServiceImpl implements CrewService {
                 .stream()
                 .findFirst();
         if (crewMember.isEmpty()) {
-            try {
-                context.refreshCash(CrewMember.class);
-            } catch (IOException e) {
-                logger.error("Exception was thrown: {}", e.toString());
-                e.printStackTrace();
-            }
+            context.refreshCash(CrewMember.class);
         }
         return findAllCrewMembersByCriteria(criteria).stream().findFirst();
     }
@@ -107,7 +91,7 @@ public class CrewServiceImpl implements CrewService {
     @Override
     public void assignCrewMemberOnMission(CrewMember crewMember) throws RuntimeException {
         if (!crewMember.getIsReadyForNextMissions()) {
-            throw new UnreachableSpaceItemException(crewMember);
+            throw new UnreachableSpaceItemException("CrewMember is already assigned", crewMember);
         } else {
             crewMember.setIsReadyForNextMissions(false);
         }

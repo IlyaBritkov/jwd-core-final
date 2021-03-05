@@ -19,6 +19,7 @@ def lombokVersion = '1.18.16'
 def slf4jVersion = '1.7.30'
 def log4jVersion = '2.13.3'
 def junitJupiterVersion = '5.7.1'
+def jacksonVersion = '2.12.2'
 
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
@@ -49,6 +50,11 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.codepoetics/protonpack
     implementation group: 'com.codepoetics', name: 'protonpack', version: '1.16'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonVersion}"
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: "${jacksonVersion}"
 
 }
 

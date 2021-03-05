@@ -3,7 +3,6 @@ package com.epam.jwd.core_final.domain.factory.impl;
 import com.epam.jwd.core_final.domain.factory.EntityFactory;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -15,7 +14,7 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
     private FlightMissionFactory() {
     }
 
-    public FlightMission create(@NotNull String name, @NotNull String missionName, @NotNull LocalDate startDate,
+    public FlightMission create(@NotNull String name, @NotNull String missionName, @NotNull LocalDateTime startDate,
                                 Planet from, Planet to) {
         return create(new Object[]{name, missionName, startDate, from, to});
     }

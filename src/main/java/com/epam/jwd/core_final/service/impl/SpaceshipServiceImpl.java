@@ -7,6 +7,7 @@ import com.epam.jwd.core_final.criteria.SpaceshipCriteria;
 import com.epam.jwd.core_final.domain.CashedEntity;
 import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
 import com.epam.jwd.core_final.domain.factory.impl.Spaceship;
+import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.exception.UnreachableSpaceItemException;
 import com.epam.jwd.core_final.repository.SpaceshipsRepository;
 import com.epam.jwd.core_final.repository.impl.SpaceshipsRepositoryImpl;
@@ -15,7 +16,6 @@ import com.epam.jwd.core_final.util.ReflectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
@@ -44,12 +44,7 @@ public class SpaceshipServiceImpl implements SpaceshipService {
     @Override
     public List<Spaceship> findAllSpaceships() {
         if (!context.isCashValid(Spaceship.class)) {
-            try {
-                context.refreshCash(Spaceship.class);
-            } catch (IOException e) {
-                logger.error("Exception was thrown: {}", e.toString());
-                e.printStackTrace();
-            }
+            context.refreshCash(Spaceship.class);
         }
         return context.retrieveBaseEntityList(Spaceship.class).stream()
                 .filter(CashedEntity::isValid)
@@ -66,12 +61,7 @@ public class SpaceshipServiceImpl implements SpaceshipService {
 
         List<Spaceship> spaceships = findAllByFieldsOfCriteria(requiredFieldsList, criteria, entityFieldsList, spaceshipList);
         if (spaceships.size() == 0) {
-            try {
-                context.refreshCash(Spaceship.class);
-            } catch (IOException e) {
-                logger.error("Exception was thrown: {}", e.toString());
-                e.printStackTrace();
-            }
+            context.refreshCash(Spaceship.class);
         }
 
         spaceshipList = findAllSpaceships();
@@ -95,12 +85,7 @@ public class SpaceshipServiceImpl implements SpaceshipService {
                 .stream()
                 .findFirst();
         if (spaceship.isEmpty()) {
-            try {
-                context.refreshCash(CrewMember.class);
-            } catch (IOException e) {
-                logger.error("Exception was thrown: {}", e.toString());
-                e.printStackTrace();
-            }
+            context.refreshCash(CrewMember.class);
         }
         return findAllSpaceshipsByCriteria(criteria).stream().findFirst();
     }
@@ -115,7 +100,10 @@ public class SpaceshipServiceImpl implements SpaceshipService {
     }
 
     @Override
-    public Spaceship createSpaceship(Spaceship spaceship) throws RuntimeException {
+    public Spaceship createSpaceship(Spaceship spaceship) throws RuntimeException, InvalidStateException {
+        if (spaceship.getCrew().size() != 4) {
+            throw new InvalidStateException(spaceship);
+        }
         spaceshipsRepository.createSpaceship(spaceship);
         context.setCashValid(Spaceship.class, false);
         return spaceship;

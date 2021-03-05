@@ -2,8 +2,6 @@ package com.epam.jwd.core_final.exception;
 
 import com.epam.jwd.core_final.domain.factory.impl.BaseEntity;
 
-import java.util.Objects;
-
 public class UnreachableSpaceItemException extends RuntimeException {
     private final BaseEntity entity;
 
@@ -16,11 +14,21 @@ public class UnreachableSpaceItemException extends RuntimeException {
         this.entity = null;
     }
 
-    @Override
-    public String getMessage() {
-        String msg = super.getMessage();
-        return Objects.requireNonNullElseGet(msg + ".Entity: " + entity, () -> "UnreachableSpaceItemException was throw with object: " + entity);
+    public UnreachableSpaceItemException(String message, BaseEntity entity) {
+        super(message);
+        this.entity = entity;
     }
 
 
+    @Override
+    public String getMessage() {
+        String msg = super.getMessage();
+        if (msg == null) {
+            return "UnreachableSpaceItemException was throw with object" + entity;
+        } else if (entity == null) {
+            return msg;
+        } else {
+            return msg + " Args:" + entity;
+        }
+    }
 }

@@ -13,8 +13,8 @@ import java.util.Map;
 public class SpaceshipFactory implements EntityFactory<Spaceship> {
     private static SpaceshipFactory INSTANCE;
 
-    public Spaceship create(@NotNull String name, @NotNull Long flightDistance, @NotNull Map<Role, Short> crew) {
-        return create(new Object[]{name, flightDistance, crew});
+    public Spaceship create(@NotNull String name, @NotNull Long flightDistance, @NotNull Map<Role, Short> crewMap) {
+        return create(new Object[]{name, flightDistance, crewMap});
     }
 
     @Override

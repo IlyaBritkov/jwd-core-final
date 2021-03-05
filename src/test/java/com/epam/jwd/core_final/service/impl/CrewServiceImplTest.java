@@ -65,14 +65,16 @@ public class CrewServiceImplTest {
     }
 
     @Test
-    public void methodAssignCrewMemberOnMissionShouldNotThrowException() throws InvalidStateException, IOException {
+    public void methodAssignCrewMemberOnMissionShouldNotThrowException() {
         context.refreshCash(CrewMember.class);
 
         final CrewMember crewMember = crewService.findAllCrewMembers().get(0);
         crewService.assignCrewMemberOnMission(crewMember);
 
         boolean expectedBol = false;
-        Assertions.assertEquals(expectedBol, crewMember.getIsReadyForNextMissions());
+        boolean actualBol = crewMember.getIsReadyForNextMissions();
+        crewMember.setIsReadyForNextMissions(true);
+        Assertions.assertEquals(expectedBol, actualBol);
     }
 
     @Test(expected = UnreachableSpaceItemException.class)

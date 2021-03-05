@@ -62,8 +62,13 @@ public class CrewMemberCriteria extends Criteria<CrewMember> {
         }
 
         @Override
-        public CrewMemberCriteria build() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-            CrewMemberCriteria criteria = super.build();
+        public CrewMemberCriteria build() {
+            CrewMemberCriteria criteria = null;
+            try {
+                criteria = super.build();
+            } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
             criteria.setRole(this.getRole());
             criteria.setRank(this.getRank());
             criteria.setIsReadyForNextMissions(this.getIsReadyForNextMissions());

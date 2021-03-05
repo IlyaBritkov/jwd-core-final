@@ -84,7 +84,7 @@ public class SpaceshipsServiceImplTest {
     }
 
     @Test
-    public void methodCreateSpaceshipShouldAddNewSpaceship() throws IOException {
+    public void methodCreateSpaceshipShouldAddNewSpaceship() throws IOException, InvalidStateException {
         context.refreshCash(Spaceship.class);
 
         int expectedSize = context.retrieveBaseEntityList(Spaceship.class).size() + 1;
@@ -106,7 +106,7 @@ public class SpaceshipsServiceImplTest {
     }
 
     @Test
-    public void methodDeleteCrewMemberShouldDeleteSpecifiedCrewMember() throws IOException {
+    public void methodDeleteCrewMemberShouldDeleteSpecifiedCrewMember() throws IOException, InvalidStateException {
         context.refreshCash(Spaceship.class);
 
         Map<Role, Short> crew = new HashMap<>();

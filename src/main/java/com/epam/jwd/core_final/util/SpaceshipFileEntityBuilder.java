@@ -141,7 +141,6 @@ class SpaceshipFileEntityBuilder implements FileEntityBuilder<Spaceship> {
                 .filter(e -> hashInputFields.contains(e.getName()))
                 .collect(Collectors.toList());
 
-
         List<Field> sortedFields = new ArrayList<>();
 
         hashInputFields.forEach(hash -> unsortedFields.forEach(usortField -> {
@@ -170,6 +169,7 @@ class SpaceshipFileEntityBuilder implements FileEntityBuilder<Spaceship> {
                 e.printStackTrace();
             }
         });
+
         String result = stringBuilder.toString().trim();
 
         logger.debug("String: {} was composed from entity: {}", result, entity);

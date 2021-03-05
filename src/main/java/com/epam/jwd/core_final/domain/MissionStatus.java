@@ -1,6 +1,6 @@
 package com.epam.jwd.core_final.domain;
 
-public enum MissionResult {
+public enum MissionStatus {
     CANCELLED,
     FAILED,
     PLANNED,

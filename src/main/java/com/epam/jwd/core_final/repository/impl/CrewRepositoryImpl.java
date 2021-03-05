@@ -7,6 +7,7 @@ import com.epam.jwd.core_final.util.FileEntityBuilderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Collection;
@@ -19,7 +20,7 @@ public class CrewRepositoryImpl implements CrewRepository {
     private final Logger logger = LoggerFactory.getLogger(CrewRepositoryImpl.class);
     private static CrewRepositoryImpl INSTANCE;
     private final FileEntityBuilderUtil<CrewMember> fileEntityBuilder = new FileEntityBuilderUtil<>(CrewMember.class);
-    private String filePath = NassaContext.getApplicationProperties().getInputRootDir() + "/" + NassaContext.getApplicationProperties().getCrewFileName();
+    private final String filePath = NassaContext.getApplicationProperties().getInputRootDir() + File.separator + NassaContext.getApplicationProperties().getCrewFileName();
 
     private CrewRepositoryImpl() {
     }

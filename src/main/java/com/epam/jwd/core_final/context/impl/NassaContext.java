@@ -3,10 +3,7 @@ package com.epam.jwd.core_final.context.impl;
 import com.epam.jwd.core_final.context.ApplicationContext;
 import com.epam.jwd.core_final.domain.ApplicationProperties;
 import com.epam.jwd.core_final.domain.CashedEntity;
-import com.epam.jwd.core_final.domain.factory.impl.BaseEntity;
-import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
-import com.epam.jwd.core_final.domain.factory.impl.Planet;
-import com.epam.jwd.core_final.domain.factory.impl.Spaceship;
+import com.epam.jwd.core_final.domain.factory.impl.*;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.exception.UnknownEntityException;
 import com.epam.jwd.core_final.repository.CrewRepository;
@@ -51,6 +48,8 @@ public class NassaContext implements ApplicationContext {
     private Set<CashedEntity<Planet>> planetMap = new HashSet<>();
     private final PlanetRepository planetRepository = PlanetRepositoryImpl.getInstance();
 
+    private Set<CashedEntity<FlightMission>> flightMissions = new HashSet<>();
+
     public static ApplicationProperties getApplicationProperties() {
         return NassaContext.applicationProperties;
     }
@@ -65,6 +64,8 @@ public class NassaContext implements ApplicationContext {
             collection = spaceships;
         } else if (tClass == Planet.class) {
             collection = planetMap;
+        } else if (tClass == FlightMission.class) {
+            collection = flightMissions;
         }
         logger.debug("Collection with {} entities was retrieved", tClass.getSimpleName());
         return (Set<CashedEntity<T>>) collection;
@@ -91,6 +92,7 @@ public class NassaContext implements ApplicationContext {
         emptyCash(CrewMember.class);
         emptyCash(Spaceship.class);
         emptyCash(Planet.class);
+        emptyCash(FlightMission.class);
         logger.info("All cashes were deleted");
     }
 
@@ -102,12 +104,24 @@ public class NassaContext implements ApplicationContext {
             spaceships = new HashSet<>();
         } else if (tClass == Planet.class) {
             planetMap = new HashSet<>();
+        } else if (tClass == FlightMission.class) {
+            flightMissions = new HashSet<>();
         } else {
             throw new UnknownEntityException(tClass.getSimpleName());
         }
         logger.info("Cash of {} was deleted", tClass.getSimpleName());
     }
 
+    @Override
+    public <T extends BaseEntity> T addToCash(T entity) {
+        Class<?> tClass = entity.getClass();
+        if (tClass == FlightMission.class) {
+            flightMissions.add(new CashedEntity<>((FlightMission) entity));
+        } else {
+            throw new UnknownEntityException(entity.getClass().getSimpleName(), entity);
+        }
+        return entity;
+    }
 
     @Override
     public <T extends BaseEntity> void deleteFromCash(T entity) {
@@ -127,8 +141,10 @@ public class NassaContext implements ApplicationContext {
                     isDeleted.set(true);
                 }
             });
+        } else if (tClass == FlightMission.class) {
+            isDeleted.set(flightMissions.removeIf(e -> e.getEntity().equals(entity)));
         } else {
-            throw new UnknownEntityException(tClass.getSimpleName());
+            throw new UnknownEntityException(tClass.getSimpleName(), entity);
         }
 
         if (isDeleted.get()) {
@@ -140,37 +156,42 @@ public class NassaContext implements ApplicationContext {
     }
 
     @Override
-    public void refreshAllCash() throws IOException {
-        emptyCash(CrewMember.class);
-        emptyCash(Spaceship.class);
-        emptyCash(Planet.class);
-
+    public void refreshAllCash() {
         refreshCash(CrewMember.class);
         refreshCash(Spaceship.class);
         refreshCash(Planet.class);
+        refreshCash(FlightMission.class);
         logger.info("All cashes were refreshed");
     }
 
     @Override
-    public <T extends BaseEntity> void refreshCash(Class<T> tClass) throws IOException {
-        if (tClass == CrewMember.class) {
-            crewMembers = crewRepository.findAll().stream()
-                    .map((Function<CrewMember, CashedEntity<CrewMember>>) CashedEntity::new)
-                    .collect(Collectors.toSet());
-            setCrewMembersCashValid(true);
-        } else if (tClass == Spaceship.class) {
-            spaceships = spaceshipsRepository.findAll().stream()
-                    .map((Function<Spaceship, CashedEntity<Spaceship>>) CashedEntity::new)
-                    .collect(Collectors.toSet());
-            setSpaceshipsCashValid(true);
-        } else if (tClass == Planet.class) {
-            planetMap = planetRepository.findAll().stream()
-                    .map((Function<Planet, CashedEntity<Planet>>) CashedEntity::new)
-                    .collect(Collectors.toSet());
-        } else {
-            throw new UnknownEntityException(tClass.getSimpleName());
+    public <T extends BaseEntity> void refreshCash(Class<T> tClass) {
+        try {
+            if (tClass == CrewMember.class) {
+                crewMembers = crewRepository.findAll().stream()
+                        .map((Function<CrewMember, CashedEntity<CrewMember>>) CashedEntity::new)
+                        .collect(Collectors.toSet());
+                setCrewMembersCashValid(true);
+            } else if (tClass == Spaceship.class) {
+                spaceships = spaceshipsRepository.findAll().stream()
+                        .map((Function<Spaceship, CashedEntity<Spaceship>>) CashedEntity::new)
+                        .collect(Collectors.toSet());
+                setSpaceshipsCashValid(true);
+            } else if (tClass == Planet.class) {
+                planetMap = planetRepository.findAll().stream()
+                        .map((Function<Planet, CashedEntity<Planet>>) CashedEntity::new)
+                        .collect(Collectors.toSet());
+            } else if (tClass == FlightMission.class) {
+                flightMissions = new HashSet<>();
+            } else {
+                throw new UnknownEntityException(tClass.getSimpleName());
+            }
+            logger.info("Cash of {} was refreshed", tClass.getSimpleName());
+        } catch (IOException ex) {
+            logger.error("Exception was thrown: {}", ex.toString());
+            ex.printStackTrace();
         }
-        logger.info("Cash of {} was refreshed", tClass.getSimpleName());
+
     }
 
     @Override
