@@ -1,7 +1,7 @@
 package com.epam.jwd.core_final.criteria;
 
-import com.epam.jwd.core_final.criteria.util.ReflectUtil;
 import com.epam.jwd.core_final.domain.MissionStatus;
+import com.epam.jwd.core_final.testUtil.ReflectUtil;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;

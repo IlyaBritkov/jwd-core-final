@@ -5,6 +5,7 @@ import com.epam.jwd.core_final.context.ApplicationContext;
 import com.epam.jwd.core_final.criteria.Criteria;
 import com.epam.jwd.core_final.criteria.FlightMissionCriteria;
 import com.epam.jwd.core_final.domain.CashedEntity;
+import com.epam.jwd.core_final.domain.MissionStatus;
 import com.epam.jwd.core_final.domain.Role;
 import com.epam.jwd.core_final.domain.factory.impl.CrewMember;
 import com.epam.jwd.core_final.domain.factory.impl.FlightMission;
@@ -85,6 +86,16 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
+    public FlightMission cancelMission(FlightMission flightMission) {
+        if (flightMission.getMissionStatus() != MissionStatus.COMPLETED &&
+                flightMission.getMissionStatus() != MissionStatus.FAILED &&
+                flightMission.getMissionStatus() != MissionStatus.IN_PROGRESS) {
+            flightMission.setMissionStatus(MissionStatus.CANCELLED);
+        }
+        return null;
+    }
+
+    @Override
     public void writeAllMissions(List<FlightMission> flightMissions) {
         flightMissions.forEach(this::writeMission);
     }
@@ -125,8 +136,8 @@ public class MissionServiceImpl implements MissionService {
 
         Role newRole = crewMember.getRole();
         Spaceship spaceship = flightMission.getAssignedSpaceship();
-        if (spaceship == null){
-            FlightMissionFillingException exception = new FlightMissionFillingException("There is no Spaceship assigned to FlightMission",flightMission);
+        if (spaceship == null) {
+            FlightMissionFillingException exception = new FlightMissionFillingException("There is no Spaceship assigned to FlightMission", flightMission);
             logger.error("Exception was thrown: {}", exception.getMessage());
             throw exception;
         }
@@ -141,6 +152,7 @@ public class MissionServiceImpl implements MissionService {
 
         return crewMember;
     }
+
 
     @Override
     public void clear() {

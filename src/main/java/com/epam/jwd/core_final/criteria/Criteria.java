@@ -51,7 +51,11 @@ public abstract class Criteria<T1 extends BaseEntity> {
 
         @SuppressWarnings("unchecked")
         public T2 setName(String name) {
-            this.name = name.trim();
+            if (name == null){
+                this.name = null;
+            }else {
+                this.name = name.trim();
+            }
             return (T2) this;
         }
 

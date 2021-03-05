@@ -1,4 +1,4 @@
-package com.epam.jwd.core_final.criteria.util;
+package com.epam.jwd.core_final.testUtil;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

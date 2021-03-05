@@ -18,10 +18,10 @@ public interface CrewService {
 
     Optional<CrewMember> findCrewMemberByCriteria(Criteria<? extends CrewMember> criteria);
 
-    // todo create custom exception for case, when crewMember is not able to be assigned
+    // create custom exception for case, when crewMember is not able to be assigned
     void assignCrewMemberOnMission(CrewMember crewMember) throws RuntimeException;
 
-    // todo create custom exception for case, when crewMember is not able to be created (for example - duplicate).
+    // create custom exception for case, when crewMember is not able to be created (for example - duplicate).
     // crewMember unique criteria - only name!
     CrewMember createCrewMember(CrewMember crewMember) throws RuntimeException;
 

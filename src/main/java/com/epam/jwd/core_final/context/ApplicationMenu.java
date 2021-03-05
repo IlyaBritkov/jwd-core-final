@@ -4,7 +4,7 @@ import com.epam.jwd.core_final.user_interface.CrewMemberUserInterface;
 
 import java.util.Scanner;
 
-// todo replace Object with your own types
+// replace Object with your own types
 @FunctionalInterface
 public interface ApplicationMenu {
     ApplicationContext getApplicationContext();
@@ -15,18 +15,18 @@ public interface ApplicationMenu {
         System.out.println("Press 3 - work with FlightMissions");
         System.out.println("Press 0 - exit");
         Scanner scanner = new Scanner(System.in);
-        int action = scanner.nextInt();
+        handleUserInput(scanner);
         scanner.close();
-        handleUserInput(action);
         return null;
     }
 
-    static Void handleUserInput(Integer o) {
-        switch (o) {
+    static Void handleUserInput(Scanner scanner) {
+        int action = Integer.parseInt(scanner.nextLine());
+        switch (action) {
             case 0:
                 break;
             case 1:
-                CrewMemberUserInterface.printAvailableOptions();
+                CrewMemberUserInterface.printAvailableOptions(scanner);
                 break;
             case 2:
                 break;

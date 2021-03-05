@@ -21,6 +21,8 @@ public interface MissionService {
 
     FlightMission deleteMission(FlightMission flightMission);
 
+    FlightMission cancelMission(FlightMission flightMission);
+
     /**
      * Write all missions to output file
      **/

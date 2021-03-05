@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws InvalidStateException {
         menu = Application.start();
         Application.startRefreshing();
-        ApplicationMenu.printAvailableOptions();
+//        ApplicationMenu.printAvailableOptions();
 
     }
 
