@@ -1,6 +1,7 @@
 package com.epam.jwd.core_final.context;
 
 import com.epam.jwd.core_final.context.impl.NassaContext;
+import com.epam.jwd.core_final.domain.SpaceDanger;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.util.CashRefresher;
 import com.epam.jwd.core_final.util.EntityIdGenerator;
@@ -19,5 +20,9 @@ public interface Application {
 
     static void startRefreshing() {
         CashRefresher.getInstance().start();
+    }
+
+    static void startCrushing() {
+        SpaceDanger.getInstance().start();
     }
 }

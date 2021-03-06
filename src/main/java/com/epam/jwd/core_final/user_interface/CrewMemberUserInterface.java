@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class CrewMemberUserInterface {
+public class CrewMemberUserInterface implements UserInterface{
     private static final CrewService crewService = CrewServiceImpl.getInstance();
     private static final CrewMemberFactory crewFactory = CrewMemberFactory.getInstance();
 
@@ -137,7 +137,6 @@ public class CrewMemberUserInterface {
 
         return CrewMemberCriteria.builder().build();
     }
-
 
     private static CrewMember calculateCrewMember(Scanner scanner) {
         System.out.println("All fields are required for creation!");

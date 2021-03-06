@@ -51,6 +51,5 @@ public class CashRefresher {
 
         Timer timer = new Timer("refresh", true);
         timer.scheduleAtFixedRate(refreshTask, 0, fileRefreshRate);
-
     }
 }

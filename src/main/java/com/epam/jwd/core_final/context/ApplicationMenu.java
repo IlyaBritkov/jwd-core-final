@@ -1,6 +1,7 @@
 package com.epam.jwd.core_final.context;
 
 import com.epam.jwd.core_final.user_interface.CrewMemberUserInterface;
+import com.epam.jwd.core_final.user_interface.SpaceshipUserInterface;
 
 import java.util.Scanner;
 
@@ -29,6 +30,7 @@ public interface ApplicationMenu {
                 CrewMemberUserInterface.printAvailableOptions(scanner);
                 break;
             case 2:
+                SpaceshipUserInterface.printAvailableOptions(scanner);
                 break;
             case 3:
                 break;

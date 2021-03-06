@@ -54,7 +54,7 @@ public class MissionServiceImplTest {
     }
 
     @Test
-    public void methodFindAllMissionsShouldReturnAllFlightMissionsFromCash() throws IOException {
+    public void methodFindAllMissionsShouldReturnAllFlightMissionsFromCash() throws FlightMissionFillingException {
         context.refreshCash(FlightMission.class);
 
         final FlightMission firstFlightMission = missionFactory.create("Deadline", "Deadline",
@@ -76,7 +76,7 @@ public class MissionServiceImplTest {
     }
 
     @Test
-    public void methodFindAllMissionsByCriteriaShouldReturnAllMissionBySpecifiedCriteria() {
+    public void methodFindAllMissionsByCriteriaShouldReturnAllMissionBySpecifiedCriteria() throws FlightMissionFillingException {
         context.refreshCash(FlightMission.class);
 
         final FlightMission firstFlightMission = missionFactory.create("Deadline", "Deadline",
@@ -108,7 +108,7 @@ public class MissionServiceImplTest {
     }
 
     @Test
-    public void methodFindMissionByCriteriaShouldReturnOneMission() {
+    public void methodFindMissionByCriteriaShouldReturnOneMission() throws FlightMissionFillingException {
         context.refreshCash(FlightMission.class);
 
         final FlightMission firstFlightMission = missionFactory.create("Deadline", "Deadline",
@@ -137,7 +137,7 @@ public class MissionServiceImplTest {
     }
 
     @Test
-    public void methodCreateMissionShouldCreateNewMissionInCash() {
+    public void methodCreateMissionShouldCreateNewMissionInCash() throws FlightMissionFillingException {
         context.refreshCash(FlightMission.class);
 
         final FlightMission firstFlightMission = missionFactory.create("Deadline", "Deadline",
@@ -154,7 +154,7 @@ public class MissionServiceImplTest {
     }
 
     @Test
-    public void methodDeleteMissionShouldDeleteMissionFromCash() {
+    public void methodDeleteMissionShouldDeleteMissionFromCash() throws FlightMissionFillingException {
         context.refreshCash(FlightMission.class);
 
         final FlightMission firstFlightMission = missionFactory.create("Deadline", "Deadline",
@@ -171,9 +171,9 @@ public class MissionServiceImplTest {
     }
 
     @Test
-    public void methodWriteMissionShouldWriteMissionToOutputFile() throws URISyntaxException, IOException {
+    public void methodWriteMissionShouldWriteMissionToOutputFile() throws URISyntaxException, IOException, FlightMissionFillingException {
         context.refreshCash(FlightMission.class);
-        missionService.clear();
+        missionService.clearFile();
 
         final FlightMission firstFlightMission = missionFactory.create("Deadline", "Deadline",
                 LocalDateTime.now(), planetFactory.create("Jupiter", 80, 80),
@@ -197,9 +197,9 @@ public class MissionServiceImplTest {
     }
 
     @Test
-    public void methodWriteAllMissionsShouldWriteAllMissionToOutputFile() throws URISyntaxException, IOException {
+    public void methodWriteAllMissionsShouldWriteAllMissionToOutputFile() throws URISyntaxException, IOException, FlightMissionFillingException {
         context.refreshCash(FlightMission.class);
-        missionService.clear();
+        missionService.clearFile();
 
         final FlightMission flightMission = missionFactory.create("Deadline", "Deadline",
                 LocalDateTime.now(), spacemapService.getRandomPlanet(), spacemapService.getRandomPlanet());
@@ -218,7 +218,7 @@ public class MissionServiceImplTest {
 
         int oneMissionSize = stringBuilder.toString().length();
 
-        missionService.clear();
+        missionService.clearFile();
 
         missionService.writeAllMissions(Arrays.asList(flightMission, flightMission));
 
@@ -236,7 +236,7 @@ public class MissionServiceImplTest {
     }
 
     @Test
-    public void methodClearShouldClearOutputFile() throws URISyntaxException, IOException {
+    public void methodClearShouldClearOutputFile() throws URISyntaxException, IOException, FlightMissionFillingException {
         context.refreshCash(FlightMission.class);
 
         final FlightMission firstFlightMission = missionFactory.create("Deadline", "Deadline",
@@ -247,7 +247,7 @@ public class MissionServiceImplTest {
 
         missionService.writeAllMissions(Arrays.asList(firstFlightMission, secondFlightMission));
 
-        missionService.clear();
+        missionService.clearFile();
 
         File file = new File(Objects.requireNonNull(
                 MissionServiceImplTest.class.getClassLoader().getResource(filePath)).toURI());

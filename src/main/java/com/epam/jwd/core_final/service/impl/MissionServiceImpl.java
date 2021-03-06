@@ -118,9 +118,9 @@ public class MissionServiceImpl implements MissionService {
             throw flightMissionFillingEx;
         }
 
-        if (flightMission.getAssignedSpaceship() != null) {
+        if (flightMission.getAssignedSpaceship() != null || flightMission.getDistance() > spaceship.getDistance()) {
             spaceship.setIsReadyForNextMissions(true);
-            FlightMissionFillingException exception = new FlightMissionFillingException("FlightMission is already has assigned spaceship", flightMission, spaceship);
+            FlightMissionFillingException exception = new FlightMissionFillingException("FlightMission is already has assigned spaceship or input spaceship has too small max distance for the mission", flightMission, spaceship);
             logger.error("Exception was thrown: {}", exception.getMessage());
             throw exception;
         } else {
@@ -153,9 +153,15 @@ public class MissionServiceImpl implements MissionService {
         return crewMember;
     }
 
+    @Override
+    public void clearFile() {
+        missionRepository.clear();
+    }
 
     @Override
-    public void clear() {
-        missionRepository.clear();
+    public void crush(FlightMission flightMission) {
+        flightMission.setMissionStatus(MissionStatus.FAILED);
+        spaceshipService.deleteSpaceship(flightMission.getAssignedSpaceship());
+        flightMission.getAssignedCrew().forEach(crewService::deleteCrewMember);
     }
 }

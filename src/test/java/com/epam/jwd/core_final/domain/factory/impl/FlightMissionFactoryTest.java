@@ -1,5 +1,6 @@
 package com.epam.jwd.core_final.domain.factory.impl;
 
+import com.epam.jwd.core_final.exception.FlightMissionFillingException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -13,7 +14,7 @@ public class FlightMissionFactoryTest {
     }
 
     @Test
-    public void methodCreateShouldReturnNewEntities() {
+    public void methodCreateShouldReturnNewEntities() throws FlightMissionFillingException {
         FlightMissionFactory factory = FlightMissionFactory.getInstance();
         FlightMission first = factory.create("Spacex", "SpaceX", LocalDateTime.now(),
                  new Planet("Earth", 1000, 1000), new Planet("Jupiter", 5000, 5000));
@@ -24,7 +25,7 @@ public class FlightMissionFactoryTest {
     }
 
     @Test
-    public void methodCreateShouldReturnNewEntityWithAppropriateFields() {
+    public void methodCreateShouldReturnNewEntityWithAppropriateFields() throws FlightMissionFillingException {
         String name = "SpaceX";
         String missionName = "SpaceX";
         LocalDateTime startDate = LocalDateTime.now();

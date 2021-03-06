@@ -35,10 +35,16 @@ public interface MissionService {
 
     Spaceship assignSpaceshipOnMission(FlightMission flightMission, Spaceship spaceship) throws FlightMissionFillingException;
 
-    CrewMember assignCrewMemberOnMission(FlightMission flightMission,CrewMember crewMember) throws FlightMissionFillingException;
+    CrewMember assignCrewMemberOnMission(FlightMission flightMission, CrewMember crewMember) throws FlightMissionFillingException;
 
     /**
      * Clear output file, delete all entities from the file
      **/
-    void clear();
+    void clearFile();
+
+    /**
+     * Sets Failed status to flightMission,
+     * removes spaceship and its crewMembers
+     **/
+    void crush(FlightMission flightMission);
 }

@@ -22,7 +22,7 @@ public class Spaceship extends AbstractBaseEntity {
     @NotNull
     private Map<Role, Short> crew;
     @NotNull
-    private Long distance; // flightDistance
+    private Long distance; // max flight distance
     private Boolean isReadyForNextMissions = true;
 
     protected Spaceship(@NotNull String name, @NotNull Long distance, @NotNull Map<Role, Short> crew) {

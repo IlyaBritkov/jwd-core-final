@@ -2,7 +2,6 @@ package com.epam.jwd.core_final.util;
 
 import com.epam.jwd.core_final.Main;
 import com.epam.jwd.core_final.exception.InvalidStateException;
-import org.junit.jupiter.api.Test;
 
 public class CashRefresherTest {
 
@@ -14,10 +13,10 @@ public class CashRefresherTest {
         }
     }
 
-    @Test
-    public void test() throws InterruptedException {
-        CashRefresher.getInstance().start();
-        Thread.sleep(11_000);
-    }
+//    @Test
+//    public void test() throws InterruptedException {
+//        CashRefresher.getInstance().start();
+//        Thread.sleep(11_000);
+//    }
 
 }
