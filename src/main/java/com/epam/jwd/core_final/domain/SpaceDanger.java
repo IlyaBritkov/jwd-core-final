@@ -46,7 +46,7 @@ public class SpaceDanger {
         TimerTask crushTask = new TimerTask() {
             @Override
             public void run() {
-                boolean successChance = new Random().nextInt(101) > 10;
+                boolean successChance = new Random().nextInt(1001) > 10;
                 if (!successChance) {
                     Optional<FlightMission> flightMissionOptional = missionService.findAllMissionsByCriteria(
                             FlightMissionCriteria
@@ -57,7 +57,7 @@ public class SpaceDanger {
                     if (flightMissionOptional.isPresent()) {
                         final FlightMission flightMission = flightMissionOptional.get();
                         missionService.crush(flightMission);
-                        logger.debug("FlightMission + " + flightMission + " crashed");
+                        logger.info("FlightMission + " + flightMission + " crashed");
                     }
                 }
             }

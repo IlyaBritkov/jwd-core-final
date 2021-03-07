@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReflectUtil {
@@ -66,10 +67,15 @@ public class ReflectUtil {
 
         requiredFields.forEach(requiredField -> {
             try {
-                if (!comparedFields.stream().filter(field -> field.getName().
-                        equals(requiredField.getName()))
-                        .findFirst().orElseThrow().get(comparedObject)
-                        .equals(requiredField.get(requiredObject))) {
+                Optional<Field> optionalField = comparedFields.stream()
+                        .filter(f -> f.getName()
+                                .equals(requiredField.getName()))
+                        .findFirst();
+                if (optionalField.isEmpty()
+                        ||
+                        optionalField.get().get(comparedObject) == null
+                        ||
+                        !optionalField.get().get(comparedObject).equals(requiredField.get(requiredObject))) {
                     flag.set(false);
                 }
             } catch (IllegalAccessException e) {

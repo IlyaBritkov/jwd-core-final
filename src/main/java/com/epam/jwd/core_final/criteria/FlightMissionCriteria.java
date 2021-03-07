@@ -12,7 +12,7 @@ import lombok.ToString;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -26,9 +26,9 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
     @Nullable
     private String missionName;
     @Nullable
-    private LocalDate startDate;
+    private LocalDateTime startDate;
     @Nullable
-    private LocalDate endDate;
+    private LocalDateTime endDate;
     @Nullable
     private Long distance;
     @Nullable
@@ -54,9 +54,9 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
         @Nullable
         private String missionName;
         @Nullable
-        private LocalDate startDate;
+        private LocalDateTime startDate;
         @Nullable
-        private LocalDate endDate;
+        private LocalDateTime endDate;
         @Nullable
         private Long distance;
         @Nullable
@@ -79,12 +79,12 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
             return this;
         }
 
-        public FlightMissionCriteriaBuilder setStartDate(LocalDate startDate) {
+        public FlightMissionCriteriaBuilder setStartDate(LocalDateTime startDate) {
             this.startDate = startDate;
             return this;
         }
 
-        public FlightMissionCriteriaBuilder setEndDate(LocalDate endDate) {
+        public FlightMissionCriteriaBuilder setEndDate(LocalDateTime endDate) {
             this.endDate = endDate;
             return this;
         }

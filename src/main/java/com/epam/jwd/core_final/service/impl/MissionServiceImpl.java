@@ -96,18 +96,20 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public void writeAllMissions(List<FlightMission> flightMissions) {
-        flightMissions.forEach(this::writeMission);
+    public void writeAllMissionsToFile(List<FlightMission> flightMissions) {
+        missionRepository.writeAllMissions(flightMissions);
+        logger.info("FlightMissions {} were written to file", flightMissions);
     }
 
     @Override
-    public FlightMission writeMission(FlightMission flightMission) {
+    public FlightMission writeMissionToFile(FlightMission flightMission) {
         missionRepository.writeMission(flightMission);
+        logger.info("FlightMission {} was written to file", flightMission);
         return flightMission;
     }
 
     @Override
-    // todo maybe do something with exception
+    // todo maybe replace Runtime exception by checked exception
     public Spaceship assignSpaceshipOnMission(FlightMission flightMission, Spaceship spaceship) throws RuntimeException, FlightMissionFillingException {
         try {
             spaceshipService.assignSpaceshipOnMission(spaceship);
@@ -130,7 +132,7 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    // todo maybe do something with exception
+    // todo maybe replace Runtime exception by checked exception
     public CrewMember assignCrewMemberOnMission(FlightMission flightMission, CrewMember crewMember) throws FlightMissionFillingException {
         crewService.assignCrewMemberOnMission(crewMember);
 

@@ -13,23 +13,25 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class CrewMemberUserInterface implements UserInterface{
+public class CrewMemberUserInterface implements UserInterface {
     private static final CrewService crewService = CrewServiceImpl.getInstance();
     private static final CrewMemberFactory crewFactory = CrewMemberFactory.getInstance();
 
     public static void printAvailableOptions(Scanner scanner) {
-        System.out.println("Press 1 - Print all CrewMembers");
-        System.out.println("Press 2 - Print all CrewMembers by criteria");
-        System.out.println("Press 3 - Print CrewMembers by criteria");
-        System.out.println("Press 4 - Create CrewMember");
-        System.out.println("Press 5 - Delete CrewMember by criteria");
-        System.out.println("Press 0 - Go back");
+        while (true) {
+            System.out.println("Press 1 - Print all CrewMembers");
+            System.out.println("Press 2 - Print all CrewMembers by criteria");
+            System.out.println("Press 3 - Print CrewMembers by criteria");
+            System.out.println("Press 4 - Create CrewMember");
+            System.out.println("Press 5 - Delete CrewMember by criteria");
+            System.out.println("Press 0 - Go back");
 
-        handleUserInput(scanner);
+            handleUserInput(scanner);
+        }
     }
 
     private static void handleUserInput(Scanner scanner) {
-        int action = Integer.parseInt(scanner.nextLine());
+        int action = Integer.parseInt(scanner.nextLine().trim());
         CrewMemberCriteria criteria = null;
         switch (action) {
             case 0:
@@ -76,6 +78,7 @@ public class CrewMemberUserInterface implements UserInterface{
                 printAvailableOptions(scanner);
                 break;
             case 5:
+                System.out.println("Deleted CrewMember by criteria:");
                 CrewMemberCriteria deleteCriteria = calculateCriteria(scanner);
                 CrewMember deleteCrewMember = crewService.findCrewMemberByCriteria(deleteCriteria).get();
                 crewService.deleteCrewMember(deleteCrewMember);

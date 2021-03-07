@@ -69,14 +69,16 @@ public class MissionRepositoryImpl implements MissionRepository {
 
     @Override
     public FlightMission writeMission(FlightMission flightMission) {
-        try {
-            File missionsFile = new File(Objects.requireNonNull(MissionRepositoryImpl.class.getClassLoader().getResource(filePath)).toURI());
-            objectMapper.writeValue(new FileWriter(missionsFile, true), flightMission);
-        } catch (IOException | URISyntaxException ex) {
-            logger.error("Exception was thrown: " + ex.toString());
-            ex.printStackTrace();
+        if (flightMission != null) {
+            try {
+                File missionsFile = new File(Objects.requireNonNull(MissionRepositoryImpl.class.getClassLoader().getResource(filePath)).toURI());
+                objectMapper.writeValue(new FileWriter(missionsFile, true), flightMission);
+            } catch (IOException | URISyntaxException ex) {
+                logger.error("Exception was thrown: " + ex.toString());
+                ex.printStackTrace();
+            }
+            logger.debug("FlightMission was written to file: {}", flightMission);
         }
-        logger.debug("FlightMission was written to file: {}", flightMission);
         return flightMission;
     }
 

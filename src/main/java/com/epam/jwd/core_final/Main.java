@@ -17,7 +17,6 @@ public class Main {
         Application.startCrushing();
 
         ApplicationMenu.printAvailableOptions();
-
     }
 
     public static ApplicationContext getApplicationContext() {

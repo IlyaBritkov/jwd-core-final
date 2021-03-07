@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,8 +21,8 @@ public class FlightMissionCriteriaTest {
     public void builderShouldSetFieldsAndReturnNewInstance() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Long id = 1L;
         String name = "SpaceX";
-        LocalDate startDate = LocalDate.now();
-        LocalDate endDate = startDate.plusWeeks(3);
+        LocalDateTime startDate = LocalDateTime.now();
+        LocalDateTime endDate = startDate.plusWeeks(3);
         Long distance = 1000L;
         MissionStatus missionStatus = MissionStatus.IN_PROGRESS;
 

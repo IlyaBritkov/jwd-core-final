@@ -26,12 +26,12 @@ public interface MissionService {
     /**
      * Write all missions to output file
      **/
-    void writeAllMissions(List<FlightMission> flightMissions);
+    void writeAllMissionsToFile(List<FlightMission> flightMissions);
 
     /**
      * Write specific mission to output file
      **/
-    FlightMission writeMission(FlightMission flightMission);
+    FlightMission writeMissionToFile(FlightMission flightMission);
 
     Spaceship assignSpaceshipOnMission(FlightMission flightMission, Spaceship spaceship) throws FlightMissionFillingException;
 

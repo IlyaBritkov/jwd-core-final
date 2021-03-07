@@ -5,7 +5,6 @@ import com.epam.jwd.core_final.criteria.SpaceshipCriteria;
 import com.epam.jwd.core_final.domain.Role;
 import com.epam.jwd.core_final.domain.factory.impl.Spaceship;
 import com.epam.jwd.core_final.domain.factory.impl.SpaceshipFactory;
-import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.service.SpaceshipService;
 import com.epam.jwd.core_final.service.impl.SpaceshipServiceImpl;
 
@@ -16,19 +15,21 @@ public class SpaceshipUserInterface implements UserInterface {
     private static final SpaceshipFactory spaceshipFactory = SpaceshipFactory.getInstance();
 
     public static void printAvailableOptions(Scanner scanner) {
-        System.out.println("Press 1 - Print all Spaceships");
-        System.out.println("Press 2 - Print all Spaceships by criteria");
-        System.out.println("Press 3 - Print Spaceship by criteria");
-        System.out.println("Press 4 - Create Spaceship");
-        System.out.println("Press 5 - Delete Spaceship by criteria");
-        System.out.println("Press 0 - Go back");
+        while (true) {
+            System.out.println("Press 1 - Print all Spaceships");
+            System.out.println("Press 2 - Print all Spaceships by criteria");
+            System.out.println("Press 3 - Print Spaceship by criteria");
+            System.out.println("Press 4 - Create Spaceship");
+            System.out.println("Press 5 - Delete Spaceship by criteria");
+            System.out.println("Press 0 - Go back");
 
-        handleUserInput(scanner);
+            handleUserInput(scanner);
+        }
     }
 
     private static void handleUserInput(Scanner scanner) {
         int action = Integer.parseInt(scanner.nextLine());
-        SpaceshipCriteria criteria = null;
+        SpaceshipCriteria criteria;
         try {
             switch (action) {
                 case 0:
@@ -48,7 +49,7 @@ public class SpaceshipUserInterface implements UserInterface {
                     criteria = calculateCriteria(scanner);
                     List<Spaceship> spaceshipsByCriteria = spaceshipService.findAllSpaceshipsByCriteria(criteria);
                     if (spaceshipsByCriteria.size() == 0) {
-                        System.out.println("There is no one CrewMember yet");
+                        System.out.println("There is no one Spaceship yet");
                     } else {
                         System.out.println("The result of your search by criteria:" + criteria);
                         spaceshipsByCriteria.forEach(System.out::println);
@@ -81,10 +82,9 @@ public class SpaceshipUserInterface implements UserInterface {
                     printAvailableOptions(scanner);
                     break;
             }
-        } catch (InvalidStateException e) {
+        } catch (Exception e) {
             System.out.println("You entered wrong data");
         }
-
     }
 
     private static SpaceshipCriteria calculateCriteria(Scanner scanner) {

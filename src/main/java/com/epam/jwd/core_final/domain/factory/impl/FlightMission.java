@@ -78,8 +78,13 @@ public class FlightMission extends AbstractBaseEntity {
         final LocalDateTime now = LocalDateTime.now();
         if (now.isBefore(startDate)) {
             missionStatus = MissionStatus.PLANNED;
-        } else if (now.isAfter(startDate) && now.isBefore(endDate)) {
+        } else if (now.isEqual(startDate)
+                ||
+                (now.isAfter(startDate) && now.isBefore(endDate))
+                        && this.assignedSpaceship != null && this.assignedCrew.size() > 0) {
             missionStatus = MissionStatus.IN_PROGRESS;
+        }else {
+            setMissionStatus(MissionStatus.CANCELLED);
         }
     }
 
@@ -89,9 +94,9 @@ public class FlightMission extends AbstractBaseEntity {
                 missionStatus != MissionStatus.FAILED)
             if ((now.isEqual(startDate) ||
                     (now.isAfter(startDate) && now.isBefore(endDate)))
-                    && assignedSpaceship != null) {
+                    && assignedSpaceship != null && this.assignedCrew.size() > 0) {
                 setMissionStatus(MissionStatus.IN_PROGRESS);
-            } else if (now.isAfter(endDate) && assignedSpaceship != null) {
+            } else if (now.isAfter(endDate) && assignedSpaceship != null && assignedCrew.size() > 0) {
                 setMissionStatus(MissionStatus.COMPLETED);
             }
         return missionStatus;

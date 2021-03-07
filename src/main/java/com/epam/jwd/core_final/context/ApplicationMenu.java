@@ -1,6 +1,7 @@
 package com.epam.jwd.core_final.context;
 
 import com.epam.jwd.core_final.user_interface.CrewMemberUserInterface;
+import com.epam.jwd.core_final.user_interface.FlightMissionUserInterface;
 import com.epam.jwd.core_final.user_interface.SpaceshipUserInterface;
 
 import java.util.Scanner;
@@ -11,21 +12,28 @@ public interface ApplicationMenu {
     ApplicationContext getApplicationContext();
 
     static Void printAvailableOptions() {
-        System.out.println("Press 1 - work with CrewMembers");
-        System.out.println("Press 2 - work with Spaceships");
-        System.out.println("Press 3 - work with FlightMissions");
-        System.out.println("Press 0 - exit");
-        Scanner scanner = new Scanner(System.in);
-        handleUserInput(scanner);
-        scanner.close();
+        try (Scanner scanner = new Scanner(System.in)) {
+            boolean work = true;
+            while (work) {
+                System.out.println("Press 1 - work with CrewMembers");
+                System.out.println("Press 2 - work with Spaceships");
+                System.out.println("Press 3 - work with FlightMissions");
+                System.out.println("Press 0 - exit");
+                work = handleUserInput(scanner);
+            }
+        }
         return null;
     }
 
-    static Void handleUserInput(Scanner scanner) {
-        int action = Integer.parseInt(scanner.nextLine());
+    static Boolean handleUserInput(Scanner scanner) {
+        String line = scanner.nextLine().trim();
+        if (line.length() == 0) {
+            return false;
+        }
+        int action = Integer.parseInt(line);
         switch (action) {
             case 0:
-                break;
+                System.exit(0);
             case 1:
                 CrewMemberUserInterface.printAvailableOptions(scanner);
                 break;
@@ -33,8 +41,9 @@ public interface ApplicationMenu {
                 SpaceshipUserInterface.printAvailableOptions(scanner);
                 break;
             case 3:
+                FlightMissionUserInterface.printAvailableOptions(scanner);
                 break;
         }
-        return null;
+        return true;
     }
 }

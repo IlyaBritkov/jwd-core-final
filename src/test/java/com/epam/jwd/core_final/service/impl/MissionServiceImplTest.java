@@ -182,7 +182,7 @@ public class MissionServiceImplTest {
         File file = new File(Objects.requireNonNull(
                 MissionServiceImplTest.class.getClassLoader().getResource(filePath)).toURI());
 
-        missionService.writeMission(firstFlightMission);
+        missionService.writeMissionToFile(firstFlightMission);
 
         List<String> lines = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
@@ -204,7 +204,7 @@ public class MissionServiceImplTest {
         final FlightMission flightMission = missionFactory.create("Deadline", "Deadline",
                 LocalDateTime.now(), spacemapService.getRandomPlanet(), spacemapService.getRandomPlanet());
 
-        missionService.writeMission(flightMission);
+        missionService.writeMissionToFile(flightMission);
 
         File file = new File(Objects.requireNonNull(
                 MissionServiceImplTest.class.getClassLoader().getResource(filePath)).toURI());
@@ -220,7 +220,7 @@ public class MissionServiceImplTest {
 
         missionService.clearFile();
 
-        missionService.writeAllMissions(Arrays.asList(flightMission, flightMission));
+        missionService.writeAllMissionsToFile(Arrays.asList(flightMission, flightMission));
 
         stringBuilder = new StringBuilder();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
@@ -245,7 +245,7 @@ public class MissionServiceImplTest {
         final FlightMission secondFlightMission = missionFactory.create("DragonBall", "DragonBall",
                 LocalDateTime.now().plusSeconds(45), spacemapService.getRandomPlanet(), spacemapService.getRandomPlanet());
 
-        missionService.writeAllMissions(Arrays.asList(firstFlightMission, secondFlightMission));
+        missionService.writeAllMissionsToFile(Arrays.asList(firstFlightMission, secondFlightMission));
 
         missionService.clearFile();
 
